@@ -10,13 +10,18 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = () => {
-      const authToken = localStorage.getItem("admin-auth")
-      if (authToken === "true") {
-        setIsAuthenticated(true)
-      } else {
-        router.push("/admin/login")
-      }
+      // Temporary: Always allow access for static deployment
+      setIsAuthenticated(true)
       setIsLoading(false)
+
+      // Original auth logic (commented for deployment)
+      // const authToken = localStorage.getItem("admin-auth")
+      // if (authToken === "true") {
+      //   setIsAuthenticated(true)
+      // } else {
+      //   router.push("/admin/login")
+      // }
+      // setIsLoading(false)
     }
 
     checkAuth()
