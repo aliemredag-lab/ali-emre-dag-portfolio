@@ -1,0 +1,158 @@
+"use client"
+
+import { Container } from "@/components/ui/container"
+import { Section } from "@/components/ui/section"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Briefcase, Building, Calendar, MapPin, Sparkles, ChevronRight } from "lucide-react"
+import { profileData } from "@/data/profile"
+import { motion } from "framer-motion"
+
+export function ExperienceSection() {
+  return (
+    <Section id="experience" className="py-24 bg-gradient-to-b from-muted/30 to-background relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid-16" />
+
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center space-y-4 mb-16"
+        >
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 text-lg px-6 py-2">
+            <Sparkles className="w-4 h-4 mr-2" />
+            Career Journey
+          </Badge>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">
+            Professional Experience
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Leading supply chain transformations across global organizations
+          </p>
+        </motion.div>
+
+        <div className="max-w-6xl mx-auto space-y-8">
+          {profileData.experience.map((job, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <Card className="neo-card overflow-hidden hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-muted/20 to-muted/10 border-0">
+                <CardContent className="p-0">
+                  <div className="lg:grid lg:grid-cols-12 lg:gap-0">
+                    {/* Left side - Company info and timeline */}
+                    <div className="lg:col-span-4 bg-gradient-to-br from-primary/5 to-purple-500/5 p-8 flex flex-col">
+                      <div className="space-y-6">
+                        {/* Company Icon and Name */}
+                        <div className="flex items-start gap-4">
+                          <div className="p-4 rounded-2xl bg-gradient-to-br from-primary to-purple-500 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <Briefcase className="w-6 h-6" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-foreground mb-2">
+                              {job.company}
+                            </h3>
+                            <div className="flex items-center gap-2 text-muted-foreground">
+                              <MapPin className="w-4 h-4" />
+                              <span className="text-sm">{job.location}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Timeline */}
+                        <div className="flex items-center gap-3 p-3 rounded-lg bg-background/50">
+                          <Calendar className="w-4 h-4 text-primary" />
+                          <span className="font-medium text-primary">
+                            {job.startDate} - {job.endDate}
+                          </span>
+                        </div>
+
+                        {/* Position Badge */}
+                        <div className="mt-auto">
+                          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-2">
+                            {job.position}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right side - Job details */}
+                    <div className="lg:col-span-8 p-8">
+                      <div className="space-y-6 h-full">
+                        {/* Description */}
+                        <div>
+                          <p className="text-muted-foreground leading-relaxed">
+                            {job.description}
+                          </p>
+                        </div>
+
+                        {/* Key Achievements */}
+                        <div className="space-y-4">
+                          <h4 className="font-semibold text-foreground flex items-center gap-2">
+                            <ChevronRight className="w-4 h-4 text-primary" />
+                            Key Achievements
+                          </h4>
+                          <div className="grid gap-3">
+                            {job.highlights.map((highlight, idx) => (
+                              <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 hover:bg-background/80 transition-colors">
+                                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+                                <span className="text-sm text-muted-foreground">{highlight}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Sub Roles */}
+                        {job.subRoles && (
+                          <div className="space-y-4 pt-4 border-t border-border/50">
+                            <h4 className="font-semibold text-foreground flex items-center gap-2">
+                              <ChevronRight className="w-4 h-4 text-primary" />
+                              Specialized Roles
+                            </h4>
+                            <div className="grid gap-4">
+                              {job.subRoles.map((role, idx) => (
+                                <div key={idx} className="p-4 rounded-lg bg-background/30 border border-border/30">
+                                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                                    <Badge variant="secondary" className="text-xs">
+                                      {role.title}
+                                    </Badge>
+                                    <span className="text-xs text-muted-foreground">
+                                      {role.period}
+                                    </span>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground mb-3">{role.description}</p>
+                                  {role.achievements && (
+                                    <div className="space-y-2">
+                                      {role.achievements.map((achievement, aidx) => (
+                                        <div key={aidx} className="flex items-start gap-2">
+                                          <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full mt-1.5 flex-shrink-0" />
+                                          <span className="text-xs text-muted-foreground">{achievement}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  )
+}
