@@ -1,15 +1,20 @@
-import type { Metadata } from 'next'
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Download, Printer } from "lucide-react"
 import Link from "next/link"
 import { profileData } from "@/data/profile"
-
-export const metadata: Metadata = {
-  title: 'Resume - Ali Emre Dağ',
-  description: 'Printable resume of Ali Emre Dağ - Global Supply Chain Manager',
-}
+import { useEffect } from "react"
 
 export default function ResumePage() {
+  useEffect(() => {
+    document.title = 'Resume - Ali Emre Dağ'
+    const metaDescription = document.querySelector('meta[name="description"]')
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Printable resume of Ali Emre Dağ - Global Supply Chain Manager')
+    }
+  }, [])
+
   return (
     <div className="min-h-screen bg-background">
       {/* Print-hidden navigation */}
