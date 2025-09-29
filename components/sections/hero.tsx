@@ -52,13 +52,13 @@ export function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh] px-4 lg:px-0">
           {/* Content Left */}
-          <div className="space-y-8 text-center lg:text-left">
+          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
             <div className="space-y-6">
 
             <motion.h1
-              className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl font-display"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold tracking-tight font-display leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -72,10 +72,10 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30 backdrop-blur-sm">
-                <span className="text-lg font-semibold text-primary">🌍 International Supply Chain Leader</span>
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30 backdrop-blur-sm">
+                <span className="text-sm sm:text-lg font-semibold text-primary">🌍 International Supply Chain Leader</span>
               </div>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 lg:px-0">
                 {profileData.title}
               </p>
             </motion.div>
@@ -136,7 +136,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative"
             >
-              <div className="w-[28rem] h-[24rem] md:w-[36rem] md:h-[32rem] rounded-2xl overflow-hidden border-4 border-primary/20 shadow-smooth-lg">
+              <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[24rem] xl:w-[36rem] xl:h-[32rem] rounded-2xl overflow-hidden border-4 border-primary/20 shadow-smooth-lg">
                 {profileImage ? (
                   <img
                     src={profileImage}

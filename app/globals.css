@@ -42,38 +42,38 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --primary-50: 221 83% 8%;
-    --primary-100: 221 83% 12%;
-    --primary-200: 221 83% 18%;
-    --primary-300: 221 83% 25%;
-    --primary-400: 221 83% 33%;
-    --primary-500: 221 83% 42%;
-    --primary-600: 221 83% 53%;
-    --primary-700: 221 83% 65%;
+    --background: 222.2 32% 8%;
+    --foreground: 210 40% 95%;
+    --card: 222.2 32% 12%;
+    --card-foreground: 210 40% 95%;
+    --popover: 222.2 32% 12%;
+    --popover-foreground: 210 40% 95%;
+    --primary: 221 83% 58%;
+    --primary-foreground: 222.2 32% 8%;
+    --primary-50: 221 83% 12%;
+    --primary-100: 221 83% 16%;
+    --primary-200: 221 83% 22%;
+    --primary-300: 221 83% 28%;
+    --primary-400: 221 83% 38%;
+    --primary-500: 221 83% 48%;
+    --primary-600: 221 83% 58%;
+    --primary-700: 221 83% 68%;
     --primary-800: 221 83% 78%;
     --primary-900: 221 83% 88%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 221 83% 53%;
-    --gradient-from: 221 83% 53%;
-    --gradient-via: 261 83% 58%;
-    --gradient-to: 291 83% 63%;
+    --secondary: 217.2 32.6% 22%;
+    --secondary-foreground: 210 40% 95%;
+    --muted: 217.2 32.6% 18%;
+    --muted-foreground: 215 20.2% 70%;
+    --accent: 217.2 32.6% 22%;
+    --accent-foreground: 210 40% 95%;
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 210 40% 95%;
+    --border: 217.2 32.6% 22%;
+    --input: 217.2 32.6% 20%;
+    --ring: 221 83% 58%;
+    --gradient-from: 221 83% 58%;
+    --gradient-via: 261 83% 62%;
+    --gradient-to: 291 83% 68%;
   }
 }
 
@@ -97,6 +97,25 @@
 
   p {
     text-wrap: pretty;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Improve touch targets */
+    button, a {
+      min-height: 44px;
+    }
+
+    /* Better mobile spacing */
+    section {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
   }
 }
 

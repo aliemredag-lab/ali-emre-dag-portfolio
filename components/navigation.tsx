@@ -38,10 +38,10 @@ export function Navigation() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
-      <div className="container flex h-20 items-center justify-between">
+      <div className="container flex h-16 md:h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2 group">
           <div className="relative">
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <span className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
               Ali Emre Dağ
             </span>
             <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-purple-600 transition-all duration-300 group-hover:w-full"></div>
@@ -122,8 +122,8 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden border-t bg-background/95 backdrop-blur-md">
-          <nav className="flex flex-col space-y-2 p-4">
+        <div className="md:hidden border-t bg-background/98 backdrop-blur-md shadow-lg">
+          <nav className="flex flex-col space-y-1 p-4 max-h-[80vh] overflow-y-auto">
             {navigation.map((item) => {
               const IconComponent = item.icon
 
@@ -132,10 +132,10 @@ export function Navigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="flex items-center gap-3 p-3 rounded-lg text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-500/10 transition-all duration-300 group"
+                    className="flex items-center gap-4 p-4 rounded-xl text-base font-medium text-foreground/80 hover:text-foreground hover:bg-gradient-to-r hover:from-primary/15 hover:to-purple-500/15 transition-all duration-300 group border border-transparent hover:border-primary/20"
                     onClick={() => setIsOpen(false)}
                   >
-                    <IconComponent className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                    <IconComponent className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                     <span>{item.name}</span>
                   </Link>
                 )
@@ -145,10 +145,10 @@ export function Navigation() {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="flex items-center gap-3 p-3 rounded-lg text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-gradient-to-r hover:from-primary/10 hover:to-purple-500/10 transition-all duration-300 group"
+                  className="flex items-center gap-4 p-4 rounded-xl text-base font-medium text-foreground/80 hover:text-foreground hover:bg-gradient-to-r hover:from-primary/15 hover:to-purple-500/15 transition-all duration-300 group border border-transparent hover:border-primary/20"
                   onClick={() => setIsOpen(false)}
                 >
-                  <IconComponent className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                  <IconComponent className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                   <span>{item.name}</span>
                 </a>
               )
