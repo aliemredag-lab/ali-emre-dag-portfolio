@@ -144,8 +144,13 @@ export function HeroSection() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                    <User className="w-24 h-24 text-primary/40" />
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex flex-col items-center justify-center">
+                    <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+                      <span className="text-4xl font-bold text-primary">
+                        {profileData.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    </div>
+                    <p className="text-primary/60 text-sm">Profil fotoğrafı yükleniyor...</p>
                   </div>
                 )}
               </div>
