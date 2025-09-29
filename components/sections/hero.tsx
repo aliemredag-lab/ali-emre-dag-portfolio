@@ -106,9 +106,9 @@ export function HeroSection() {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <Button asChild size="lg" className="neo-card px-8 py-6 text-lg rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground">
-                <a href="mailto:aliemredag97@gmail.com?subject=Randevu%20Talep&body=Merhaba%20Ali%20Emre,%0A%0ARandevu%20almak%20istiyorum.%0A%0AAdınız:%0ATelefon:%0ATarih%20Tercihi:%0ASaat%20Tercihi:%0AKonu:">
+                <a href="mailto:aliemredag97@gmail.com?subject=Meeting%20Request&body=Hello%20Ali%20Emre,%0A%0AI%20would%20like%20to%20schedule%20a%20meeting.%0A%0AName:%0APhone:%0APreferred%20Date:%0APreferred%20Time:%0ATopic:">
                   <Calendar className="w-5 h-5 mr-2" />
-                  Randevu Al
+                  Schedule Meeting
                 </a>
               </Button>
             </motion.div>
@@ -150,7 +150,7 @@ export function HeroSection() {
                         {profileData.name.split(' ').map(n => n[0]).join('')}
                       </span>
                     </div>
-                    <p className="text-primary/70 text-xs sm:text-sm px-4 text-center">Profil fotoğrafı yükleniyor...</p>
+                    <p className="text-primary/70 text-xs sm:text-sm px-4 text-center">Loading profile photo...</p>
                   </div>
                 )}
               </div>

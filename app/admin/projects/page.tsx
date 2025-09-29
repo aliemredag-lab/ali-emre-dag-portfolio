@@ -22,11 +22,11 @@ import {
   X
 } from "lucide-react"
 import { motion } from "framer-motion"
-import { defaultProjects, type Project } from "@/data/projects"
+import { profileData, type Project } from "@/data/profile"
 
 export default function ProjectsManagementPage() {
   const router = useRouter()
-  const [projects, setProjects] = useState<Project[]>(defaultProjects)
+  const [projects, setProjects] = useState<Project[]>(profileData.projects)
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingProject, setEditingProject] = useState<Project | null>(null)
   const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ export default function ProjectsManagementPage() {
     featured: false
   })
 
-  // Load projects from localStorage
+  // Load projects from localStorage or default profileData
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('portfolio-projects')
@@ -48,7 +48,13 @@ export default function ProjectsManagementPage() {
           setProjects(JSON.parse(saved))
         } catch (error) {
           console.error('Error loading projects:', error)
+          // Fallback to profileData projects if localStorage is corrupted
+          setProjects(profileData.projects)
         }
+      } else {
+        // Load default projects from profileData if no saved projects
+        setProjects(profileData.projects)
+        localStorage.setItem('portfolio-projects', JSON.stringify(profileData.projects))
       }
     }
   }, [])
@@ -287,9 +293,9 @@ export default function ProjectsManagementPage() {
             {/* Projects List */}
             <Card className="neo-card">
               <CardHeader>
-                <CardTitle>Mevcut Projeler ({projects.length})</CardTitle>
+                <CardTitle>Current Projects ({projects.length})</CardTitle>
                 <CardDescription>
-                  Tüm projelerinizi buradan yönetebilirsiniz
+                  Manage all your projects from here
                 </CardDescription>
               </CardHeader>
               <CardContent>

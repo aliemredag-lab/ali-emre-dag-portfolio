@@ -20,8 +20,10 @@ import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { profileData, LinkedInPost } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 
 export default function PostsPage() {
+  const { t } = useLanguage()
   const [posts, setPosts] = useState<LinkedInPost[]>([])
   const [filteredPosts, setFilteredPosts] = useState<LinkedInPost[]>([])
   const [activeFilter, setActiveFilter] = useState<string>('all')
@@ -41,11 +43,11 @@ export default function PostsPage() {
   }, [])
 
   const categories = [
-    { id: 'all', label: 'Tümü' },
-    { id: 'supply-chain', label: 'Tedarik Zinciri' },
-    { id: 'leadership', label: 'Liderlik' },
-    { id: 'technology', label: 'Teknoloji' },
-    { id: 'insights', label: 'İçgörüler' }
+    { id: 'all', label: t('posts.all') },
+    { id: 'supply-chain', label: t('posts.supplyChain') },
+    { id: 'leadership', label: t('posts.leadership') },
+    { id: 'technology', label: t('posts.technology') },
+    { id: 'insights', label: t('posts.insights') }
   ]
 
   const handleFilterChange = (categoryId: string) => {
@@ -82,7 +84,7 @@ export default function PostsPage() {
               <Link href="/">
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Ana Sayfaya Dön
+                  {t("posts.backToHome")}
                 </Button>
               </Link>
             </div>
@@ -100,9 +102,9 @@ export default function PostsPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center mb-12"
             >
-              <h1 className="text-4xl font-bold mb-4">LinkedIn Yazılarım</h1>
+              <h1 className="text-4xl font-bold mb-4">{t("posts.title")}</h1>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Tedarik zinciri yönetimi, liderlik ve profesyonel deneyimlerim üzerine paylaştığım içerikler.
+                {t("posts.description")}
               </p>
             </motion.div>
 
@@ -150,10 +152,10 @@ export default function PostsPage() {
                               variant="secondary"
                               className="text-xs px-2 py-1"
                             >
-                              {post.category === 'supply-chain' ? 'Tedarik Zinciri' :
-                               post.category === 'leadership' ? 'Liderlik' :
-                               post.category === 'technology' ? 'Teknoloji' :
-                               post.category === 'insights' ? 'İçgörüler' : 'Genel'}
+                              {post.category === 'supply-chain' ? t('posts.supplyChain') :
+                               post.category === 'leadership' ? t('posts.leadership') :
+                               post.category === 'technology' ? t('posts.technology') :
+                               post.category === 'insights' ? t('posts.insights') : t('posts.all')}
                             </Badge>
                           </CardDescription>
                         </div>
@@ -214,7 +216,7 @@ export default function PostsPage() {
                             rel="noopener noreferrer"
                           >
                             <ExternalLink className="w-4 h-4" />
-                            LinkedIn'de Gör
+                            View on LinkedIn
                           </a>
                         </Button>
                       </div>
@@ -232,13 +234,13 @@ export default function PostsPage() {
                 className="text-center py-12"
               >
                 <p className="text-lg text-muted-foreground mb-6">
-                  Bu kategoride henüz yazı bulunmuyor.
+                  {t("posts.noArticles")}
                 </p>
                 <Button
                   onClick={() => handleFilterChange('all')}
                   variant="outline"
                 >
-                  Tüm Yazıları Gör
+                  {t("posts.viewAll")}
                 </Button>
               </motion.div>
             )}

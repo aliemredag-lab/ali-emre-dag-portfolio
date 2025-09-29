@@ -29,71 +29,96 @@ import {
   Folder,
   User,
   Lock,
-  X
+  X,
+  Briefcase
 } from "lucide-react"
 import { motion } from "framer-motion"
+import { profileData } from "@/data/profile"
 
-const stats = [
+// Calculate real stats from profileData
+const getRealStats = () => [
   {
-    title: "Total Views",
-    value: "12,543",
-    change: "+15.3%",
-    icon: Eye,
+    title: "LinkedIn Posts",
+    value: profileData.posts.length.toString(),
+    change: "Live Data",
+    icon: FileText,
     color: "text-blue-600"
   },
   {
-    title: "Contact Forms",
-    value: "23",
-    change: "+12.5%",
-    icon: Mail,
+    title: "Projects",
+    value: profileData.projects.length.toString(),
+    change: `${profileData.projects.filter(p => p.featured).length} Featured`,
+    icon: Folder,
     color: "text-purple-600"
   },
   {
-    title: "Page Performance",
-    value: "98%",
-    change: "+2.1%",
-    icon: TrendingUp,
+    title: "Experience Years",
+    value: profileData.kpiStats.find(s => s.label === "Years Experience")?.value || "8+",
+    change: "Current",
+    icon: Briefcase,
     color: "text-orange-600"
   },
   {
-    title: "Active Visitors",
-    value: "156",
-    change: "+5.2%",
-    icon: Users,
+    title: "Countries Served",
+    value: profileData.kpiStats.find(s => s.label === "Countries Coverage")?.value || "9",
+    change: "Global Reach",
+    icon: Globe,
     color: "text-green-600"
   }
 ]
 
-const recentActivities = [
-  {
-    action: "Contact Form Submitted",
-    user: "John Doe",
-    time: "15 minutes ago",
-    location: "New York, US"
-  },
-  {
-    action: "Profile Viewed",
-    user: "Anonymous User",
-    time: "1 hour ago",
-    location: "London, UK"
-  },
-  {
-    action: "Skills Section Viewed",
-    user: "Anonymous User",
-    time: "2 hours ago",
-    location: "Berlin, DE"
-  },
-  {
-    action: "Experience Page Visited",
-    user: "Sarah Wilson",
-    time: "3 hours ago",
-    location: "Toronto, CA"
+// Generate recent activities from real data
+const getRecentActivities = () => {
+  const activities = []
+
+  // Add recent posts activity
+  if (profileData.posts.length > 0) {
+    const latestPost = profileData.posts[0]
+    activities.push({
+      action: `LinkedIn Post: "${latestPost.title}"`,
+      user: profileData.name,
+      time: `Published ${latestPost.publishDate}`,
+      location: `${latestPost.engagement.likes} likes, ${latestPost.engagement.comments} comments`
+    })
   }
-]
+
+  // Add project activities
+  if (profileData.projects.length > 0) {
+    const latestProject = profileData.projects[0]
+    activities.push({
+      action: `Project Updated: ${latestProject.title}`,
+      user: profileData.name,
+      time: `Status: ${latestProject.status}`,
+      location: `${latestProject.technologies.join(', ')}`
+    })
+  }
+
+  // Add experience info
+  if (profileData.experience.length > 0) {
+    const currentRole = profileData.experience[0]
+    activities.push({
+      action: `Current Role: ${currentRole.position}`,
+      user: profileData.name,
+      time: `${currentRole.startDate} - ${currentRole.endDate}`,
+      location: `${currentRole.company}, ${currentRole.location}`
+    })
+  }
+
+  // Add skills summary
+  activities.push({
+    action: `Skills Portfolio`,
+    user: profileData.name,
+    time: `${profileData.skills.core.length} Core Skills`,
+    location: `${profileData.certifications.length} Certifications`
+  })
+
+  return activities
+}
 
 export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState("dashboard")
-  const [liveStats, setLiveStats] = useState(stats)
+  const [liveStats, setLiveStats] = useState(getRealStats())
+  const [recentActivities] = useState(getRecentActivities())
   const [notification, setNotification] = useState<string | null>(null)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [passwordForm, setPasswordForm] = useState({
@@ -114,34 +139,37 @@ export default function AdminPage() {
 
     // Validation
     if (!passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword) {
-      setPasswordError("Tüm alanları doldurun")
+      setPasswordError("Please fill in all fields")
       return
     }
 
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      setPasswordError("Yeni şifreler eşleşmiyor")
+      setPasswordError("New passwords do not match")
       return
     }
 
     if (passwordForm.newPassword.length < 6) {
-      setPasswordError("Yeni şifre en az 6 karakter olmalı")
+      setPasswordError("New password must be at least 6 characters")
       return
     }
 
     // Check current password (in a real app, this would be done server-side)
-    const storedPassword = localStorage.getItem("admin-password") || "admin123"
+    const storedPassword = localStorage.getItem("admin-password") || profileData.admin.defaultPassword
     if (passwordForm.currentPassword !== storedPassword) {
-      setPasswordError("Mevcut şifre yanlış")
+      setPasswordError("Current password is incorrect")
       return
     }
 
-    // Save new password
+    // Save new password to localStorage (persistent across this browser)
     localStorage.setItem("admin-password", passwordForm.newPassword)
+
+    // Note: In production, save to database/API
+    console.log("Password changed successfully. New password:", passwordForm.newPassword)
 
     // Reset form and close modal
     setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" })
     setShowPasswordModal(false)
-    setNotification("✅ Şifre başarıyla değiştirildi!")
+    setNotification("✅ Password changed successfully!")
     setTimeout(() => setNotification(null), 4000)
   }
 
@@ -339,7 +367,7 @@ export default function AdminPage() {
                   <Button className="w-full justify-start" variant="outline" asChild>
                     <a href="/admin/posts">
                       <FileText className="w-4 h-4 mr-2" />
-                      LinkedIn Yazıları
+                      LinkedIn Articles
                     </a>
                   </Button>
                   <Button
@@ -377,51 +405,51 @@ export default function AdminPage() {
                     {[
                       {
                         title: "Hero Section",
-                        desc: "Main banner and introduction",
-                        lastEdit: "2 days ago",
-                        status: "Published"
+                        desc: `${profileData.name} - ${profileData.title.split(' ').slice(0, 3).join(' ')}...`,
+                        lastEdit: "Active",
+                        status: "Live"
                       },
                       {
                         title: "About Me",
-                        desc: "Personal information and bio",
-                        lastEdit: "1 week ago",
+                        desc: profileData.about.slice(0, 50) + "...",
+                        lastEdit: "Current",
                         status: "Published"
                       },
                       {
                         title: "Experience",
-                        desc: "Work history and roles",
-                        lastEdit: "3 days ago",
-                        status: "Published"
+                        desc: `${profileData.experience.length} roles spanning ${profileData.kpiStats.find(s => s.label === "Years Experience")?.value} years`,
+                        lastEdit: `Latest: ${profileData.experience[0]?.company}`,
+                        status: `${profileData.experience.length} Roles`
                       },
                       {
                         title: "Skills",
-                        desc: "Technical and soft skills",
-                        lastEdit: "5 days ago",
-                        status: "Published"
+                        desc: `${profileData.skills.core.length} core skills, ${profileData.skills.tools.length} tools`,
+                        lastEdit: "Updated",
+                        status: `${profileData.skills.core.length + profileData.skills.methods.length + profileData.skills.tools.length + profileData.skills.soft.length} Total`
                       },
                       {
                         title: "Education",
-                        desc: "Academic background",
-                        lastEdit: "1 week ago",
-                        status: "Published"
+                        desc: `${profileData.education.length} degrees including ${profileData.education[0]?.degree}`,
+                        lastEdit: `Latest: ${profileData.education[0]?.institution}`,
+                        status: `${profileData.education.length} Degrees`
                       },
                       {
                         title: "Contact",
-                        desc: "Contact information and form",
-                        lastEdit: "2 weeks ago",
-                        status: "Published"
+                        desc: `${profileData.contact.email} | ${profileData.contact.location}`,
+                        lastEdit: "Current",
+                        status: "Active"
                       },
                       {
-                        title: "Profile Photo",
-                        desc: "Upload and manage profile image",
-                        lastEdit: "Never",
-                        status: "No Photo"
+                        title: "LinkedIn Posts",
+                        desc: `${profileData.posts.length} published posts with engagement`,
+                        lastEdit: profileData.posts.length > 0 ? profileData.posts[0].publishDate : "None",
+                        status: `${profileData.posts.length} Posts`
                       },
                       {
                         title: "Projects",
-                        desc: "Manage completed projects",
-                        lastEdit: "1 day ago",
-                        status: "3 Projects"
+                        desc: `${profileData.projects.length} projects, ${profileData.projects.filter(p => p.featured).length} featured`,
+                        lastEdit: profileData.projects.length > 0 ? profileData.projects[0].createdAt : "None",
+                        status: `${profileData.projects.length} Projects`
                       }
                     ].map((section, index) => (
                       <Card key={section.title} className="p-4 hover:shadow-lg transition-shadow">
@@ -481,31 +509,31 @@ export default function AdminPage() {
                   <div className="space-y-3">
                     {[
                       {
-                        action: "Updated Experience section",
+                        action: `Latest role: ${profileData.experience[0]?.position} at ${profileData.experience[0]?.company}`,
                         section: "Experience",
-                        time: "3 days ago",
-                        user: "Admin",
+                        time: `${profileData.experience[0]?.startDate} - ${profileData.experience[0]?.endDate}`,
+                        user: profileData.name,
                         type: "edit"
                       },
                       {
-                        action: "Added new skill: React 18",
+                        action: `Core skills updated: ${profileData.skills.core.slice(0, 2).join(', ')}...`,
                         section: "Skills",
-                        time: "5 days ago",
-                        user: "Admin",
+                        time: `${profileData.skills.core.length} core skills active`,
+                        user: profileData.name,
                         type: "add"
                       },
                       {
-                        action: "Modified contact information",
-                        section: "Contact",
-                        time: "1 week ago",
-                        user: "Admin",
-                        type: "edit"
+                        action: `LinkedIn post: "${profileData.posts[0]?.title?.slice(0, 30)}..."`,
+                        section: "Posts",
+                        time: profileData.posts[0]?.publishDate || "No posts",
+                        user: profileData.name,
+                        type: "add"
                       },
                       {
-                        action: "Updated profile photo",
-                        section: "Hero",
-                        time: "2 weeks ago",
-                        user: "Admin",
+                        action: `${profileData.certifications.length} certifications including ${profileData.certifications[0]?.name}`,
+                        section: "Certifications",
+                        time: "Current portfolio",
+                        user: profileData.name,
                         type: "update"
                       }
                     ].map((change, index) => (
@@ -737,8 +765,8 @@ export default function AdminPage() {
                     <Lock className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold">Şifre Değiştir</h3>
-                    <p className="text-sm text-muted-foreground">Admin hesabınızın şifresini güncelle</p>
+                    <h3 className="text-lg font-semibold">Change Password</h3>
+                    <p className="text-sm text-muted-foreground">Update your admin account password</p>
                   </div>
                 </div>
                 <Button
@@ -762,35 +790,35 @@ export default function AdminPage() {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="current-password">Mevcut Şifre</Label>
+                  <Label htmlFor="current-password">Current Password</Label>
                   <Input
                     id="current-password"
                     type="password"
                     value={passwordForm.currentPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                    placeholder="Mevcut şifrenizi girin"
+                    placeholder="Enter your current password"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="new-password">Yeni Şifre</Label>
+                  <Label htmlFor="new-password">New Password</Label>
                   <Input
                     id="new-password"
                     type="password"
                     value={passwordForm.newPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                    placeholder="En az 6 karakter"
+                    placeholder="At least 6 characters"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Yeni Şifre (Tekrar)</Label>
+                  <Label htmlFor="confirm-password">Confirm New Password</Label>
                   <Input
                     id="confirm-password"
                     type="password"
                     value={passwordForm.confirmPassword}
                     onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                    placeholder="Yeni şifrenizi tekrar girin"
+                    placeholder="Re-enter your new password"
                   />
                 </div>
               </div>
@@ -805,13 +833,13 @@ export default function AdminPage() {
                     setPasswordError("")
                   }}
                 >
-                  İptal
+                  Cancel
                 </Button>
                 <Button
                   className="flex-1"
                   onClick={handlePasswordChange}
                 >
-                  Şifreyi Değiştir
+                  Change Password
                 </Button>
               </div>
             </div>

@@ -6,33 +6,36 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Quote, Star, Building2, User } from "lucide-react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/language-context"
 
 export function TestimonialsSection() {
+  const { t } = useLanguage()
+
   const testimonials = [
     {
-      quote: "Ali Emre'nin lojistik ve tedarik zinciri alanındaki uzmanlığı gerçekten etkileyici. Uluslararası operasyonlardaki deneyimi ve stratejik yaklaşımı ile her zaman başarılı sonuçlar elde ediyor.",
-      author: "Tedarik Zinciri Uzmanı",
-      company: "Uluslararası Lojistik Şirketi",
+      quote: t("testimonials.quote1"),
+      author: t("testimonials.author1"),
+      company: t("testimonials.company1"),
       rating: 5,
-      highlight: "Stratejik Liderlik",
+      highlight: t("testimonials.highlight1"),
       linkedinUrl: "https://www.linkedin.com/in/aliemredag/",
       linkedinPostUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7234567890123456789/"
     },
     {
-      quote: "Çok profesyonel ve detaylı çalışma tarzı. SAP ve iş zekası araçlarındaki uzmanlığı sayesinde operasyonel verimliliği önemli ölçüde artırdı. Kesinlikle tavsiye ederim.",
-      author: "Operations Manager",
-      company: "Teknoloji Şirketi",
+      quote: t("testimonials.quote2"),
+      author: t("testimonials.author2"),
+      company: t("testimonials.company2"),
       rating: 5,
-      highlight: "Operasyonel Mükemmellik",
+      highlight: t("testimonials.highlight2"),
       linkedinUrl: "https://www.linkedin.com/in/aliemredag/",
       linkedinPostUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7234567890123456790/"
     },
     {
-      quote: "Global pazarlardaki tecrübesi ve kültürlerarası takım yönetimi becerileri mükemmel. Ali Emre ile çalışmak büyük bir keyif ve öğrenme deneyimiydi.",
-      author: "Proje Yöneticisi",
-      company: "Çok Uluslu Şirket",
+      quote: t("testimonials.quote3"),
+      author: t("testimonials.author3"),
+      company: t("testimonials.company3"),
       rating: 5,
-      highlight: "Uluslararası Deneyim",
+      highlight: t("testimonials.highlight3"),
       linkedinUrl: "https://www.linkedin.com/in/aliemredag/",
       linkedinPostUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7234567890123456791/"
     }
@@ -56,11 +59,11 @@ export function TestimonialsSection() {
             Professional Recognition
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
-            What Leaders Say
+            {t("testimonials.title")}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Trusted by international organizations for supply chain excellence and operational leadership
+            {t("testimonials.description")}
           </p>
         </motion.div>
 
@@ -129,7 +132,7 @@ export function TestimonialsSection() {
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
-                            Orijinal Gönderi
+                            {t("testimonials.originalPost")}
                           </a>
                         )}
 
@@ -142,7 +145,7 @@ export function TestimonialsSection() {
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                           </svg>
-                          LinkedIn Profili
+                          {t("testimonials.linkedinProfile")}
                         </a>
                       </div>
                     </div>
@@ -165,7 +168,7 @@ export function TestimonialsSection() {
             <div className="inline-flex items-center gap-4 px-8 py-4 rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
               <Star className="w-5 h-5 text-primary" />
               <span className="text-sm font-medium text-muted-foreground">
-                Daha fazla referans ve yorum için LinkedIn profilimi ziyaret edin
+                {t("testimonials.viewMore")}
               </span>
             </div>
 
@@ -178,7 +181,7 @@ export function TestimonialsSection() {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
-              <span>LinkedIn Profilimi Görüntüle</span>
+              <span>{t("testimonials.viewProfile")}</span>
               <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

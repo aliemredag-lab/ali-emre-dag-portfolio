@@ -5,6 +5,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageToggle } from "@/components/language-toggle"
+import { useLanguage } from "@/lib/language-context"
 import { Button } from "@/components/ui/button"
 import {
   Menu,
@@ -21,20 +23,22 @@ import {
   FileText
 } from "lucide-react"
 
-const navigation = [
-  { name: "Home", href: "#hero", icon: Home, type: "scroll" },
-  { name: "About", href: "#about", icon: User, type: "scroll" },
-  { name: "Experience", href: "#experience", icon: Briefcase, type: "scroll" },
-  { name: "Skills", href: "#skills", icon: Target, type: "scroll" },
-  { name: "Projects", href: "#projects", icon: FolderOpen, type: "scroll" },
-  { name: "Yazılarım", href: "/posts", icon: FileText, type: "link" },
-  { name: "Üye Ol", href: "#register", icon: UserPlus, type: "scroll" },
-  { name: "Contact", href: "#contact", icon: MessageCircle, type: "scroll" },
+const getNavigation = (t: (key: string) => string) => [
+  { name: t("nav.home"), href: "#hero", icon: Home, type: "scroll" },
+  { name: t("nav.about"), href: "#about", icon: User, type: "scroll" },
+  { name: t("nav.experience"), href: "#experience", icon: Briefcase, type: "scroll" },
+  { name: t("nav.skills"), href: "#skills", icon: Target, type: "scroll" },
+  { name: t("nav.projects"), href: "#projects", icon: FolderOpen, type: "scroll" },
+  { name: t("nav.articles"), href: "/posts", icon: FileText, type: "link" },
+  { name: t("nav.register"), href: "#register", icon: UserPlus, type: "scroll" },
+  { name: t("nav.contact"), href: "#contact", icon: MessageCircle, type: "scroll" },
 ]
 
 export function Navigation() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
+  const { t } = useLanguage()
+  const navigation = getNavigation(t)
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
@@ -98,15 +102,17 @@ export function Navigation() {
               className="group neo-card hover:bg-gradient-to-r hover:from-primary hover:to-purple-600 hover:text-white hover:border-primary transition-all duration-300 flex items-center gap-2"
             >
               <Shield className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-              <span>Admin</span>
+              <span>{t("nav.admin")}</span>
               <Sparkles className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
           </Link>
+          <LanguageToggle />
           <ThemeToggle />
         </nav>
 
         {/* Mobile Navigation */}
         <div className="flex md:hidden items-center space-x-2">
+          <LanguageToggle />
           <ThemeToggle />
           <Button
             variant="ghost"
@@ -163,7 +169,7 @@ export function Navigation() {
                 className="w-full group neo-card hover:bg-gradient-to-r hover:from-primary hover:to-purple-600 hover:text-white transition-all duration-300 flex items-center gap-2 justify-center"
               >
                 <Shield className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                <span>Admin Giriş</span>
+                <span>{t("nav.admin")}</span>
                 <Sparkles className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Button>
             </Link>

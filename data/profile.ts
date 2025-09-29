@@ -74,6 +74,7 @@ export interface Project {
 export interface AdminConfig {
   defaultPassword: string;
   username: string;
+  currentPassword?: string;
 }
 
 export interface ProfileData {
@@ -297,21 +298,21 @@ export const profileData: ProfileData = {
   posts: [
     {
       id: '1',
-      title: 'Tedarik Zinciri Optimizasyonunda Dijital Dönüşüm',
-      content: `Günümüzde tedarik zinciri yönetiminde dijital dönüşüm artık lüks değil, zorunluluk haline geldi.
+      title: 'Digital Transformation in Supply Chain Optimization',
+      content: `In today's world, digital transformation in supply chain management is no longer a luxury but a necessity.
 
-Son 8 yıllık uluslararası deneyimimde gözlemlediğim en önemli değişim, veri odaklı karar verme süreçlerinin operasyonel verimliliği nasıl artırdığı oldu.
+The most significant change I've observed in my 8 years of international experience is how data-driven decision-making processes have enhanced operational efficiency.
 
-🔑 Temel başarı faktörleri:
-• SAP ve BI araçlarının entegrasyonu
-• Gerçek zamanlı veri görselleştirme
-• Tahmine dayalı analitik
-• Otomatize edilmiş raporlama sistemleri
+🔑 Key success factors:
+• Integration of SAP and BI tools
+• Real-time data visualization
+• Predictive analytics
+• Automated reporting systems
 
-Bu araçların doğru implementasyonu ile Renault ve Bosch projelerimde €5.5M+ tasarruf sağladık.
+Through proper implementation of these tools, we achieved €5.5M+ in savings across Renault and Bosch projects.
 
 #SupplyChain #DigitalTransformation #DataDriven`,
-      excerpt: 'Tedarik zinciri yönetiminde dijital dönüşümün operasyonel verimliliğe etkisi ve başarı faktörleri...',
+      excerpt: 'The impact of digital transformation in supply chain management on operational efficiency and success factors...',
       publishDate: '2024-01-15',
       linkedinUrl: 'https://www.linkedin.com/in/aliemredag/',
       engagement: {
@@ -325,20 +326,20 @@ Bu araçların doğru implementasyonu ile Renault ve Bosch projelerimde €5.5M+
     },
     {
       id: '2',
-      title: 'Liderlikte Kültürler Arası Yönetim Deneyimleri',
-      content: `9 farklı ülkede çalışma fırsatı bulmuş biri olarak, kültürler arası liderlik konusunda edindiğim deneyimleri paylaşmak istiyorum.
+      title: 'Cross-Cultural Leadership Management Experiences',
+      content: `As someone who has had the opportunity to work in 9 different countries, I'd like to share my experiences in cross-cultural leadership.
 
-Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
+Each culture has its own unique business dynamics. To succeed:
 
-🌍 Yerel kültürü anlayın
-🤝 Güven temelli ilişkiler kurun
-📊 Net performans metrikleri belirleyin
-💬 Açık iletişim kanalları oluşturun
+🌍 Understand the local culture
+🤝 Build trust-based relationships
+📊 Set clear performance metrics
+💬 Create open communication channels
 
-Özellikle Avrupa'daki projelerimde gözlemlediğim en büyük başarı faktörü, takım üyelerinin güçlü yanlarını tanıyıp ona göre görevlendirme yapmak oldu.
+The biggest success factor I observed in my European projects was recognizing team members' strengths and assigning tasks accordingly.
 
 #Leadership #GlobalManagement #Teamwork`,
-      excerpt: 'Uluslararası projelerde kültürler arası liderlik deneyimleri ve başarı faktörleri...',
+      excerpt: 'Cross-cultural leadership experiences and success factors in international projects...',
       publishDate: '2024-02-20',
       linkedinUrl: 'https://www.linkedin.com/in/aliemredag/',
       engagement: {
@@ -354,8 +355,8 @@ Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
   projects: [
     {
       id: '1',
-      title: 'Tedarik Zinciri Optimizasyon Projesi',
-      description: 'Renault Grubu için geliştirilen SAP entegrasyonu ile stok yönetimi ve lojistik süreçlerinin optimize edilmesi. €2.5M tasarruf sağlandı.',
+      title: 'Supply Chain Optimization Project',
+      description: 'Optimization of inventory management and logistics processes through SAP integration developed for Renault Group. Achieved €2.5M in savings.',
       technologies: ['SAP', 'Power BI', 'Excel VBA', 'SQL'],
       status: 'completed' as const,
       featured: true,
@@ -363,8 +364,8 @@ Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
     },
     {
       id: '2',
-      title: 'Uluslararası Satın Alma Sistemi',
-      description: '9 farklı ülkede entegre satın alma süreçlerinin standardizasyonu ve otomasyonu. Vendor yönetimi ve maliyet analizi dahil.',
+      title: 'International Procurement System',
+      description: 'Standardization and automation of integrated procurement processes across 9 different countries. Including vendor management and cost analysis.',
       technologies: ['SAP MM', 'Microsoft Project', 'Power Apps'],
       status: 'completed' as const,
       featured: true,
@@ -373,7 +374,7 @@ Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
     {
       id: '3',
       title: 'Lean Manufacturing Implementation',
-      description: 'Bosch fabrikalarında 5S, Kaizen ve Six Sigma metodolojilerinin uygulanması. %35 verimlilik artışı sağlandı.',
+      description: 'Implementation of 5S, Kaizen and Six Sigma methodologies in Bosch factories. Achieved 35% efficiency improvement.',
       technologies: ['Lean Tools', 'Six Sigma', 'Kaizen', 'Value Stream Mapping'],
       status: 'completed' as const,
       featured: false,

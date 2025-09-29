@@ -27,6 +27,7 @@ import {
 } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { profileData } from "@/data/profile"
 
 interface LinkedInPost {
   id: string
@@ -66,7 +67,7 @@ export default function AdminPostsPage() {
     views: 0
   })
 
-  // Load posts from localStorage
+  // Load posts from localStorage or default profileData
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedPosts = localStorage.getItem('linkedin-posts')
@@ -76,7 +77,13 @@ export default function AdminPostsPage() {
           setPosts(parsedPosts)
         } catch (error) {
           console.error('Error loading posts:', error)
+          // Fallback to profileData posts if localStorage is corrupted
+          setPosts(profileData.posts)
         }
+      } else {
+        // Load default posts from profileData if no saved posts
+        setPosts(profileData.posts)
+        localStorage.setItem('linkedin-posts', JSON.stringify(profileData.posts))
       }
     }
   }, [])
@@ -128,10 +135,10 @@ export default function AdminPostsPage() {
     let newPosts: LinkedInPost[]
     if (editingPost) {
       newPosts = posts.map(post => post.id === editingPost.id ? postData : post)
-      setNotification('Post başarıyla güncellendi!')
+      setNotification('Post updated successfully!')
     } else {
       newPosts = [postData, ...posts]
-      setNotification('Yeni post başarıyla eklendi!')
+      setNotification('New post added successfully!')
     }
 
     savePosts(newPosts)
@@ -158,10 +165,10 @@ export default function AdminPostsPage() {
   }
 
   const handleDelete = (postId: string) => {
-    if (confirm('Bu postu silmek istediğinizden emin misiniz?')) {
+    if (confirm('Are you sure you want to delete this post?')) {
       const newPosts = posts.filter(post => post.id !== postId)
       savePosts(newPosts)
-      setNotification('Post başarıyla silindi!')
+      setNotification('Post deleted successfully!')
       setTimeout(() => setNotification(null), 3000)
     }
   }
@@ -217,8 +224,8 @@ export default function AdminPostsPage() {
                   </Button>
                 </Link>
                 <div>
-                  <h1 className="text-2xl font-bold">LinkedIn Post Yönetimi</h1>
-                  <p className="text-muted-foreground">Yazılarınızı ekleyin ve düzenleyin</p>
+                  <h1 className="text-2xl font-bold">LinkedIn Post Management</h1>
+                  <p className="text-muted-foreground">Add and edit your articles</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -257,7 +264,7 @@ export default function AdminPostsPage() {
                         {editingPost ? 'Post Düzenle' : 'Yeni Post Ekle'}
                       </CardTitle>
                       <CardDescription>
-                        LinkedIn yazınızın detaylarını girin
+                        Enter your LinkedIn article details
                       </CardDescription>
                     </div>
                     <Button
@@ -406,10 +413,10 @@ export default function AdminPostsPage() {
                     <div className="flex gap-4">
                       <Button type="submit" className="bg-primary hover:bg-primary/90">
                         <Save className="w-4 h-4 mr-2" />
-                        {editingPost ? 'Güncelle' : 'Kaydet'}
+                        {editingPost ? 'Update' : 'Save'}
                       </Button>
                       <Button type="button" variant="outline" onClick={resetForm}>
-                        İptal
+                        Cancel
                       </Button>
                     </div>
                   </form>
@@ -422,7 +429,7 @@ export default function AdminPostsPage() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold">
-                Mevcut Postlar ({posts.length})
+                Current Posts ({posts.length})
               </h2>
             </div>
 
@@ -431,8 +438,8 @@ export default function AdminPostsPage() {
                 <CardContent className="p-12 text-center">
                   <div className="text-muted-foreground">
                     <MessageCircle className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                    <h3 className="text-lg font-medium mb-2">Henüz post eklenmemiş</h3>
-                    <p className="mb-4">İlk LinkedIn postunuzu eklemek için yukarıdaki butonu kullanın</p>
+                    <h3 className="text-lg font-medium mb-2">No posts added yet</h3>
+                    <p className="mb-4">Use the button above to add your first LinkedIn post</p>
                     <Button onClick={() => setShowForm(true)}>
                       <Plus className="w-4 h-4 mr-2" />
                       Yeni Post Ekle

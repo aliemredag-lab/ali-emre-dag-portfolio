@@ -71,8 +71,8 @@ export function ProjectsSection() {
           {/* Status badge overlay */}
           <div className="absolute top-4 right-4">
             <Badge className={`${getStatusColor(project.status)} font-medium`}>
-              {project.status === 'in-progress' ? 'Devam Ediyor' :
-               project.status === 'completed' ? 'Tamamlandı' : 'Planlandı'}
+              {project.status === 'in-progress' ? 'In Progress' :
+               project.status === 'completed' ? 'Completed' : 'Planned'}
             </Badge>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function ProjectsSection() {
 
           {/* Technologies */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Teknolojiler</h4>
+            <h4 className="text-sm font-semibold text-foreground">Technologies</h4>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech, index) => (
                 <Badge key={index} variant="secondary" className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors">
@@ -107,7 +107,7 @@ export function ProjectsSection() {
               <Button asChild size="sm" className="flex-1 bg-primary hover:bg-primary/90">
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-4 h-4 mr-2" />
-                  Canlı Demo
+                  Live Demo
                 </a>
               </Button>
             )}
@@ -115,7 +115,7 @@ export function ProjectsSection() {
               <Button asChild size="sm" variant="outline" className="flex-1 hover:bg-muted">
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                   <Github className="w-4 h-4 mr-2" />
-                  Kod
+                  Code
                 </a>
               </Button>
             )}
@@ -151,10 +151,10 @@ export function ProjectsSection() {
             <Code2 className="w-4 h-4 mr-2" />
             Development Portfolio
           </Badge>
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Geliştirdiğim Projeler</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">My Projects</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Modern teknolojiler ve supply chain expertise ile hayata geçirdiğim projeler
+            Projects I've developed using modern technologies and supply chain expertise
           </p>
         </motion.div>
 
@@ -185,9 +185,9 @@ export function ProjectsSection() {
             className="text-center py-16"
           >
             <Folder className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-xl font-medium mb-2">Henüz proje eklenmemiş</h3>
+            <h3 className="text-xl font-medium mb-2">No projects added yet</h3>
             <p className="text-muted-foreground">
-              Admin panelinden projelerinizi ekleyebilirsiniz
+              You can add your projects from the admin panel
             </p>
           </motion.div>
         )}
