@@ -52,13 +52,13 @@ export function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh] px-4 lg:px-0">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center min-h-[75vh] sm:min-h-[80vh] px-2 sm:px-4 lg:px-0">
           {/* Content Left */}
-          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
+          <div className="space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1">
             <div className="space-y-6">
 
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold tracking-tight font-display leading-tight"
+              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold tracking-tight font-display leading-tight"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -75,7 +75,7 @@ export function HeroSection() {
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30 backdrop-blur-sm">
                 <span className="text-sm sm:text-lg font-semibold text-primary">🌍 International Supply Chain Leader</span>
               </div>
-              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4 lg:px-0">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-2 sm:px-4 lg:px-0">
                 {profileData.title}
               </p>
             </motion.div>
@@ -129,14 +129,14 @@ export function HeroSection() {
           </div>
 
           {/* Photo Right */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
             <motion.div
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative"
             >
-              <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[24rem] xl:w-[36rem] xl:h-[32rem] rounded-2xl overflow-hidden border-4 border-primary/20 shadow-smooth-lg">
+              <div className="w-64 h-64 xs:w-72 xs:h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[24rem] xl:w-[36rem] xl:h-[32rem] rounded-2xl overflow-hidden border-4 border-primary/30 shadow-smooth-lg">
                 {profileImage ? (
                   <img
                     src={profileImage}
@@ -144,13 +144,13 @@ export function HeroSection() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/10 flex flex-col items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                      <span className="text-4xl font-bold text-primary">
+                  <div className="w-full h-full bg-gradient-to-br from-primary/25 to-primary/15 flex flex-col items-center justify-center">
+                    <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary/30 flex items-center justify-center mb-3 sm:mb-4 shadow-lg">
+                      <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">
                         {profileData.name.split(' ').map(n => n[0]).join('')}
                       </span>
                     </div>
-                    <p className="text-primary/60 text-sm">Profil fotoğrafı yükleniyor...</p>
+                    <p className="text-primary/70 text-xs sm:text-sm px-4 text-center">Profil fotoğrafı yükleniyor...</p>
                   </div>
                 )}
               </div>
