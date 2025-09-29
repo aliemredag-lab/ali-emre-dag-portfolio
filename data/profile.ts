@@ -40,6 +40,24 @@ export interface ContactInfo {
   linkedin?: string;
 }
 
+export interface LinkedInPost {
+  id: string
+  title: string
+  content: string
+  excerpt: string
+  publishDate: string
+  linkedinUrl: string
+  engagement: {
+    likes: number
+    comments: number
+    shares: number
+    views?: number
+  }
+  tags: string[]
+  image?: string
+  category: 'supply-chain' | 'leadership' | 'technology' | 'insights' | 'announcement'
+}
+
 export interface ProfileData {
   name: string;
   title: string;
@@ -61,6 +79,7 @@ export interface ProfileData {
   education: Education[];
   certifications: Certification[];
   contact: ContactInfo;
+  posts: LinkedInPost[];
 }
 
 export const profileData: ProfileData = {
@@ -254,5 +273,62 @@ export const profileData: ProfileData = {
     email: "aliemredag@gmail.com",
     phone: "+90 531 765 98 73",
     location: "Bursa, Türkiye"
-  }
+  },
+  posts: [
+    {
+      id: '1',
+      title: 'Tedarik Zinciri Optimizasyonunda Dijital Dönüşüm',
+      content: `Günümüzde tedarik zinciri yönetiminde dijital dönüşüm artık lüks değil, zorunluluk haline geldi.
+
+Son 8 yıllık uluslararası deneyimimde gözlemlediğim en önemli değişim, veri odaklı karar verme süreçlerinin operasyonel verimliliği nasıl artırdığı oldu.
+
+🔑 Temel başarı faktörleri:
+• SAP ve BI araçlarının entegrasyonu
+• Gerçek zamanlı veri görselleştirme
+• Tahmine dayalı analitik
+• Otomatize edilmiş raporlama sistemleri
+
+Bu araçların doğru implementasyonu ile Renault ve Bosch projelerimde €5.5M+ tasarruf sağladık.
+
+#SupplyChain #DigitalTransformation #DataDriven`,
+      excerpt: 'Tedarik zinciri yönetiminde dijital dönüşümün operasyonel verimliliğe etkisi ve başarı faktörleri...',
+      publishDate: '2024-01-15',
+      linkedinUrl: 'https://www.linkedin.com/in/aliemredag/',
+      engagement: {
+        likes: 234,
+        comments: 45,
+        shares: 28,
+        views: 3200
+      },
+      tags: ['Supply Chain', 'Digital Transformation', 'Data Analytics'],
+      category: 'supply-chain' as const
+    },
+    {
+      id: '2',
+      title: 'Liderlikte Kültürler Arası Yönetim Deneyimleri',
+      content: `9 farklı ülkede çalışma fırsatı bulmuş biri olarak, kültürler arası liderlik konusunda edindiğim deneyimleri paylaşmak istiyorum.
+
+Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
+
+🌍 Yerel kültürü anlayın
+🤝 Güven temelli ilişkiler kurun
+📊 Net performans metrikleri belirleyin
+💬 Açık iletişim kanalları oluşturun
+
+Özellikle Avrupa'daki projelerimde gözlemlediğim en büyük başarı faktörü, takım üyelerinin güçlü yanlarını tanıyıp ona göre görevlendirme yapmak oldu.
+
+#Leadership #GlobalManagement #Teamwork`,
+      excerpt: 'Uluslararası projelerde kültürler arası liderlik deneyimleri ve başarı faktörleri...',
+      publishDate: '2024-02-20',
+      linkedinUrl: 'https://www.linkedin.com/in/aliemredag/',
+      engagement: {
+        likes: 189,
+        comments: 32,
+        shares: 15,
+        views: 2100
+      },
+      tags: ['Leadership', 'Global Management', 'Team Building'],
+      category: 'leadership' as const
+    }
+  ]
 };
