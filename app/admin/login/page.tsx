@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Shield, Eye, EyeOff } from "lucide-react"
 import { motion } from "framer-motion"
+import { profileData } from "@/data/profile"
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -20,11 +21,11 @@ export default function AdminLoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Get stored password or use default
-    const storedPassword = localStorage.getItem("admin-password") || "admin123"
+    // Get stored password or use default from profile
+    const storedPassword = localStorage.getItem("admin-password") || profileData.admin.defaultPassword
 
     // Simple authentication (in production, use proper auth)
-    if (credentials.username === "admin" && credentials.password === storedPassword) {
+    if (credentials.username === profileData.admin.username && credentials.password === storedPassword) {
       localStorage.setItem("admin-auth", "true")
       router.push("/admin")
     } else {

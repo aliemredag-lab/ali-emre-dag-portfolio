@@ -38,15 +38,22 @@ export function RegisterSection() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsSubmitting(true)
 
-    // Save to localStorage
-    const users = JSON.parse(localStorage.getItem('portfolio-users') || '[]')
-    const newUser = {
-      id: Date.now(),
-      ...data,
-      registeredAt: new Date().toISOString()
+    // Save to localStorage (for admin panel viewing)
+    try {
+      const users = JSON.parse(localStorage.getItem('portfolio-users') || '[]')
+      const newUser = {
+        id: Date.now(),
+        ...data,
+        registeredAt: new Date().toISOString()
+      }
+      users.push(newUser)
+      localStorage.setItem('portfolio-users', JSON.stringify(users))
+
+      // TODO: Replace with actual email service or database in production
+      console.log('New registration:', newUser)
+    } catch (error) {
+      console.error('Error saving registration:', error)
     }
-    users.push(newUser)
-    localStorage.setItem('portfolio-users', JSON.stringify(users))
 
     // Create mailto link
     const subject = `Yeni Üye Kaydı: ${data.name}`

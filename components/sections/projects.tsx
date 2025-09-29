@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github, Folder, Calendar, Star, Sparkles, Code2 } from "lucide-react"
 import { motion } from "framer-motion"
-import { defaultProjects, type Project } from "@/data/projects"
+import { profileData, type Project } from "@/data/profile"
 
 export function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>(defaultProjects)
+  const [projects, setProjects] = useState<Project[]>(profileData.projects)
 
-  // Load projects from localStorage if available
+  // Load projects from localStorage or use static default
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedProjects = localStorage.getItem('portfolio-projects')
@@ -23,6 +23,8 @@ export function ProjectsSection() {
           setProjects(parsedProjects)
         } catch (error) {
           console.error('Error loading projects:', error)
+          // Fallback to static projects
+          setProjects(profileData.projects)
         }
       }
     }

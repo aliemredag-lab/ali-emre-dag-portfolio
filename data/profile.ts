@@ -58,6 +58,24 @@ export interface LinkedInPost {
   category: 'supply-chain' | 'leadership' | 'technology' | 'insights' | 'announcement'
 }
 
+export interface Project {
+  id: string
+  title: string
+  description: string
+  image?: string
+  technologies: string[]
+  liveUrl?: string
+  githubUrl?: string
+  status: 'completed' | 'in-progress' | 'planned'
+  featured: boolean
+  createdAt: string
+}
+
+export interface AdminConfig {
+  defaultPassword: string;
+  username: string;
+}
+
 export interface ProfileData {
   name: string;
   title: string;
@@ -80,6 +98,8 @@ export interface ProfileData {
   certifications: Certification[];
   contact: ContactInfo;
   posts: LinkedInPost[];
+  projects: Project[];
+  admin: AdminConfig;
 }
 
 export const profileData: ProfileData = {
@@ -330,5 +350,38 @@ Her kültürün kendine özgü iş dinamikleri var. Başarılı olmak için:
       tags: ['Leadership', 'Global Management', 'Team Building'],
       category: 'leadership' as const
     }
-  ]
+  ],
+  projects: [
+    {
+      id: '1',
+      title: 'Tedarik Zinciri Optimizasyon Projesi',
+      description: 'Renault Grubu için geliştirilen SAP entegrasyonu ile stok yönetimi ve lojistik süreçlerinin optimize edilmesi. €2.5M tasarruf sağlandı.',
+      technologies: ['SAP', 'Power BI', 'Excel VBA', 'SQL'],
+      status: 'completed' as const,
+      featured: true,
+      createdAt: '2024-01-15'
+    },
+    {
+      id: '2',
+      title: 'Uluslararası Satın Alma Sistemi',
+      description: '9 farklı ülkede entegre satın alma süreçlerinin standardizasyonu ve otomasyonu. Vendor yönetimi ve maliyet analizi dahil.',
+      technologies: ['SAP MM', 'Microsoft Project', 'Power Apps'],
+      status: 'completed' as const,
+      featured: true,
+      createdAt: '2023-08-20'
+    },
+    {
+      id: '3',
+      title: 'Lean Manufacturing Implementation',
+      description: 'Bosch fabrikalarında 5S, Kaizen ve Six Sigma metodolojilerinin uygulanması. %35 verimlilik artışı sağlandı.',
+      technologies: ['Lean Tools', 'Six Sigma', 'Kaizen', 'Value Stream Mapping'],
+      status: 'completed' as const,
+      featured: false,
+      createdAt: '2023-03-10'
+    }
+  ],
+  admin: {
+    username: 'admin',
+    defaultPassword: 'admin123'
+  }
 };
