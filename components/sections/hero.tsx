@@ -12,12 +12,15 @@ import { useState, useEffect } from "react"
 export function HeroSection() {
   const [profileImage, setProfileImage] = useState<string | null>(null)
 
-  // Get profile image from localStorage or use default
+  // Get profile image from localStorage or use static default
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedImage = localStorage.getItem('profile-image')
       if (savedImage) {
         setProfileImage(savedImage)
+      } else {
+        // Use static profile image from profileData
+        setProfileImage(profileData.profileImage || null)
       }
     }
   }, [])

@@ -45,6 +45,7 @@ export interface ProfileData {
   title: string;
   location: string;
   about: string;
+  profileImage?: string;
   kpiStats: KPIStat[];
   experience: Experience[];
   skills: {
@@ -67,6 +68,7 @@ export const profileData: ProfileData = {
   title: "International Supply Chain Leader & Global Operations Expert",
   location: "Bursa, Türkiye",
   about: "Ali Emre Dağ is an accomplished International Supply Chain Leader with 8+ years of proven expertise across global procurement, production planning, logistics orchestration, and multinational project leadership. As a certified supply chain strategist, he has spearheaded transformational operations for Renault Group and Bosch across 9 countries, managing €120M+ inventory portfolios and delivering €5.5M+ in operational savings through advanced Lean Six Sigma methodologies and data-driven decision frameworks. His international leadership spans complex cross-cultural teams and global stakeholder management.",
+  profileImage: "/profile.jpg",
   kpiStats: [
     {
       value: "8+",
