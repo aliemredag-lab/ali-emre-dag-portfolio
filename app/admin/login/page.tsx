@@ -21,7 +21,10 @@ export default function AdminLoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
+    console.log('🔍 Login attempt started:', { password })
+
     try {
+      console.log('📡 Sending request to API...')
       const response = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: {
@@ -33,16 +36,21 @@ export default function AdminLoginPage() {
         })
       })
 
+      console.log('📨 Response received:', { status: response.status, ok: response.ok })
+
       const result = await response.json()
+      console.log('📄 Response data:', result)
 
       if (result.success) {
+        console.log('✅ Login successful!')
         localStorage.setItem("admin-auth", "true")
         router.push("/admin")
       } else {
+        console.log('❌ Login failed:', result.message)
         alert(result.message || "Invalid credentials")
       }
     } catch (error) {
-      console.error('Login error:', error)
+      console.error('💥 Login error:', error)
       alert("Login failed. Please try again.")
     }
 
