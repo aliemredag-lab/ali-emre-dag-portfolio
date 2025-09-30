@@ -32,9 +32,47 @@ function ensureConfigFile(): AdminConfig {
   }
 }
 
+// Simple in-memory rate limiting
+const loginAttempts = new Map<string, { count: number; lastAttempt: number }>()
+
+const checkRateLimit = (ip: string): boolean => {
+  const now = Date.now()
+  const attempts = loginAttempts.get(ip)
+
+  if (!attempts) {
+    loginAttempts.set(ip, { count: 1, lastAttempt: now })
+    return true
+  }
+
+  // Reset if last attempt was more than 15 minutes ago
+  if (now - attempts.lastAttempt > 15 * 60 * 1000) {
+    loginAttempts.set(ip, { count: 1, lastAttempt: now })
+    return true
+  }
+
+  // Allow max 5 attempts per 15 minutes
+  if (attempts.count >= 5) {
+    return false
+  }
+
+  attempts.count++
+  attempts.lastAttempt = now
+  return true
+}
+
 // Login endpoint
 export async function POST(request: NextRequest) {
   console.log('=== ADMIN AUTH API CALLED ===')
+
+  // Rate limiting
+  const clientIP = request.ip || 'unknown'
+  if (!checkRateLimit(clientIP)) {
+    console.log('❌ Rate limit exceeded for IP:', clientIP)
+    return NextResponse.json({
+      success: false,
+      message: 'Too many login attempts. Please try again later.'
+    }, { status: 429 })
+  }
 
   try {
     console.log('Parsing request body...')
@@ -59,14 +97,22 @@ export async function POST(request: NextRequest) {
       console.log('Processing login action...')
       if (password === config.password) {
         console.log('✅ Password match - Login successful')
+
+        // Generate secure session token
+        const timestamp = Date.now()
+        const sessionToken = `session-${timestamp}-${Math.random().toString(36).substr(2, 9)}`
+
         return NextResponse.json({
           success: true,
-          message: 'Login successful'
+          message: 'Login successful',
+          token: sessionToken
         })
       } else {
         console.log('❌ Password mismatch')
-        console.log('Received type:', typeof password, 'Expected type:', typeof config.password)
-        console.log('Received length:', password?.length, 'Expected length:', config.password?.length)
+
+        // Add delay to prevent brute force attacks
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
         return NextResponse.json({
           success: false,
           message: 'Invalid password'

@@ -10,9 +10,27 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = () => {
-      const authToken = localStorage.getItem("admin-auth")
-      if (authToken === "true") {
-        setIsAuthenticated(true)
+      const sessionToken = localStorage.getItem("admin-session")
+
+      // Check if session token exists and has valid format
+      if (sessionToken && sessionToken.startsWith("session-") && sessionToken.includes("-")) {
+        // Additional validation: check if session is not too old (24 hours)
+        const tokenParts = sessionToken.split("-")
+        if (tokenParts.length >= 3) {
+          const timestamp = parseInt(tokenParts[1])
+          const now = Date.now()
+          const hoursDiff = (now - timestamp) / (1000 * 60 * 60)
+
+          if (hoursDiff < 24) { // Session valid for 24 hours
+            setIsAuthenticated(true)
+          } else {
+            // Session expired
+            localStorage.removeItem("admin-session")
+            router.push("/admin/login")
+          }
+        } else {
+          router.push("/admin/login")
+        }
       } else {
         router.push("/admin/login")
       }

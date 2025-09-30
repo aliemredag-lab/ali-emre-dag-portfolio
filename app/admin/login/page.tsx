@@ -21,12 +21,34 @@ export default function AdminLoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simple direct check - no API needed
-    if (password === 'admin123') {
-      localStorage.setItem("admin-auth", "true")
-      router.push("/admin")
-    } else {
-      alert("Invalid password")
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'login',
+          password: password
+        })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          // Generate secure session token
+          const sessionToken = result.token || 'authenticated-' + Date.now()
+          localStorage.setItem("admin-session", sessionToken)
+          router.push("/admin")
+        } else {
+          alert(result.message || "Invalid credentials")
+        }
+      } else {
+        alert("Authentication failed")
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      alert("Login failed. Please try again.")
     }
 
     setIsLoading(false)

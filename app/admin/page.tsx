@@ -130,7 +130,9 @@ export default function AdminPage() {
   const router = useRouter()
 
   const handleLogout = () => {
+    // Clear all auth related storage
     localStorage.removeItem("admin-auth")
+    localStorage.removeItem("admin-session")
     router.push("/admin/login")
   }
 
