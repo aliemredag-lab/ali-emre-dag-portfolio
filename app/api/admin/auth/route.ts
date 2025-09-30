@@ -10,37 +10,25 @@ interface AdminConfig {
   version: string
 }
 
-// Ensure config file exists - prioritize environment variable
+// Ensure config file exists - use fallback password for production
 function ensureConfigFile(): AdminConfig {
-  // Always prioritize environment variable for production
-  if (process.env.ADMIN_PASSWORD) {
-    return {
-      password: process.env.ADMIN_PASSWORD,
-      lastChanged: new Date().toISOString(),
-      version: '1.0'
-    }
-  }
+  // For production, use hardcoded password since environment variables might not work
+  const productionPassword = 'admin123'
 
-  try {
-    if (!fs.existsSync(CONFIG_PATH)) {
-      const defaultConfig: AdminConfig = {
-        password: 'admin123',
-        lastChanged: new Date().toISOString(),
-        version: '1.0'
-      }
-      fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaultConfig, null, 2))
-      return defaultConfig
-    }
+  // Try environment variable first, then fallback to hardcoded
+  const password = process.env.ADMIN_PASSWORD || productionPassword
 
-    const configData = fs.readFileSync(CONFIG_PATH, 'utf8')
-    return JSON.parse(configData)
-  } catch (error) {
-    console.error('Config file error:', error)
-    return {
-      password: 'admin123',
-      lastChanged: new Date().toISOString(),
-      version: '1.0'
-    }
+  console.log('Config check:', {
+    hasEnvVar: !!process.env.ADMIN_PASSWORD,
+    envValue: process.env.ADMIN_PASSWORD,
+    finalPassword: password
+  })
+
+  // Always return the same structure for consistency
+  return {
+    password: password,
+    lastChanged: new Date().toISOString(),
+    version: '1.0'
   }
 }
 
