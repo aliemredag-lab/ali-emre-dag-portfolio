@@ -230,9 +230,6 @@ const translations = {
     "register.title": "Join My Network",
     "register.description": "Stay connected for updates and opportunities",
 
-    // Education Section
-    "education.title": "Education",
-    "education.description": "Academic background and qualifications",
 
     // Common
     "common.loading": "Loading...",
@@ -443,10 +440,6 @@ const translations = {
     // Register Section
     "register.title": "Ağıma Katılın",
     "register.description": "Güncellemeler ve fırsatlar için bağlantıda kalın",
-
-    // Education Section
-    "education.title": "Eğitim",
-    "education.description": "Akademik geçmiş ve nitelikler",
 
     // Experience Translation
     "profile.aboutText": "Ali Emre Dağ, tedarik zinciri yönetiminde 8+ yıllık kanıtlanmış uzmanlığa sahip başarılı bir Uluslararası Tedarik Zinciri Lideridir. Küresel satın alma, üretim planlama, lojistik orkestrasyon ve çok uluslu proje liderliği alanlarında deneyimlidir.",
