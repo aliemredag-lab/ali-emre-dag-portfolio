@@ -50,13 +50,17 @@ export async function POST(request: NextRequest) {
     const { password, action } = await request.json()
     const config = ensureConfigFile()
 
+    console.log('Login attempt:', { action, receivedPassword: password, expectedPassword: config.password })
+
     if (action === 'login') {
       if (password === config.password) {
+        console.log('Login successful')
         return NextResponse.json({
           success: true,
           message: 'Login successful'
         })
       } else {
+        console.log('Password mismatch')
         return NextResponse.json({
           success: false,
           message: 'Invalid password'
