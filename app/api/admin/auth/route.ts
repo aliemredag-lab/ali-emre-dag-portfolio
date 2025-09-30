@@ -10,12 +10,21 @@ interface AdminConfig {
   version: string
 }
 
-// Ensure config file exists
+// Ensure config file exists - prioritize environment variable
 function ensureConfigFile(): AdminConfig {
+  // Always prioritize environment variable for production
+  if (process.env.ADMIN_PASSWORD) {
+    return {
+      password: process.env.ADMIN_PASSWORD,
+      lastChanged: new Date().toISOString(),
+      version: '1.0'
+    }
+  }
+
   try {
     if (!fs.existsSync(CONFIG_PATH)) {
       const defaultConfig: AdminConfig = {
-        password: process.env.ADMIN_PASSWORD || 'admin123',
+        password: 'admin123',
         lastChanged: new Date().toISOString(),
         version: '1.0'
       }
@@ -28,7 +37,7 @@ function ensureConfigFile(): AdminConfig {
   } catch (error) {
     console.error('Config file error:', error)
     return {
-      password: process.env.ADMIN_PASSWORD || 'admin123',
+      password: 'admin123',
       lastChanged: new Date().toISOString(),
       version: '1.0'
     }
