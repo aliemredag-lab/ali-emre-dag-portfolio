@@ -13,7 +13,7 @@ import { profileData } from "@/data/profile"
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [credentials, setCredentials] = useState({ username: "", password: "" })
+  const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -21,15 +21,29 @@ export default function AdminLoginPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Get stored password or use default from profile
-    const storedPassword = localStorage.getItem("admin-password") || profileData.admin.defaultPassword
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'login',
+          password: password
+        })
+      })
 
-    // Simple authentication (in production, use proper auth)
-    if (credentials.username === profileData.admin.username && credentials.password === storedPassword) {
-      localStorage.setItem("admin-auth", "true")
-      router.push("/admin")
-    } else {
-      alert("Invalid credentials")
+      const result = await response.json()
+
+      if (result.success) {
+        localStorage.setItem("admin-auth", "true")
+        router.push("/admin")
+      } else {
+        alert(result.message || "Invalid credentials")
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      alert("Login failed. Please try again.")
     }
 
     setIsLoading(false)
@@ -59,26 +73,14 @@ export default function AdminLoginPage() {
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter username"
-                    value={credentials.username}
-                    onChange={(e) => setCredentials(prev => ({ ...prev, username: e.target.value }))}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="password">Password</Label>
                   <div className="relative">
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Enter password"
-                      value={credentials.password}
-                      onChange={(e) => setCredentials(prev => ({ ...prev, password: e.target.value }))}
+                      placeholder="Enter admin password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                     <Button

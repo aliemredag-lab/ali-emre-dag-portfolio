@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/container"
 import Link from "next/link"
+import { Settings } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -27,6 +28,13 @@ export function Footer() {
               >
                 Contact
               </a>
+              <Link
+                href="/admin/login"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors opacity-50 hover:opacity-100 group"
+                title="Admin Login"
+              >
+                <Settings className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
+              </Link>
             </nav>
           </div>
         </div>

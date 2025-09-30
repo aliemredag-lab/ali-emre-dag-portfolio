@@ -343,6 +343,40 @@ html {
   background: hsl(var(--ring));
 }
 
+/* Optimized slow spinning animations for better performance */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slower {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slowest {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-slower {
+  animation: spin-slower 25s linear infinite;
+}
+
+.animate-spin-slowest {
+  animation: spin-slowest 30s linear infinite;
+}
+
+/* Performance optimizations */
+.floating-element {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -352,5 +386,11 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .animate-spin-slow,
+  .animate-spin-slower,
+  .animate-spin-slowest {
+    animation: none !important;
   }
 }

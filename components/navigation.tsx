@@ -18,8 +18,6 @@ import {
   FolderOpen,
   UserPlus,
   MessageCircle,
-  Shield,
-  Sparkles,
   FileText
 } from "lucide-react"
 
@@ -94,18 +92,6 @@ export function Navigation() {
           })}
 
           <div className="h-6 w-px bg-border mx-2"></div>
-
-          <Link href="/admin/login">
-            <Button
-              variant="outline"
-              size="sm"
-              className="group neo-card hover:bg-gradient-to-r hover:from-primary hover:to-purple-600 hover:text-white hover:border-primary transition-all duration-300 flex items-center gap-2"
-            >
-              <Shield className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-              <span>{t("nav.admin")}</span>
-              <Sparkles className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Button>
-          </Link>
           <LanguageToggle />
           <ThemeToggle />
         </nav>
@@ -160,19 +146,6 @@ export function Navigation() {
               )
             })}
 
-            <div className="h-px bg-border my-2"></div>
-
-            <Link href="/admin/login" onClick={() => setIsOpen(false)}>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full group neo-card hover:bg-gradient-to-r hover:from-primary hover:to-purple-600 hover:text-white transition-all duration-300 flex items-center gap-2 justify-center"
-              >
-                <Shield className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                <span>{t("nav.admin")}</span>
-                <Sparkles className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </Button>
-            </Link>
           </nav>
         </div>
       )}

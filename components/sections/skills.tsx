@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/section"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { profileData } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import {
   Brain,
@@ -20,31 +21,68 @@ import {
 } from "lucide-react"
 
 export function SkillsSection() {
+  const { t } = useLanguage()
+  // Function to translate skills based on category
+  const getTranslatedSkills = (category: string, skills: string[]) => {
+    const translationMap: Record<string, Record<string, string>> = {
+      core: {
+        "Supply Chain Management": t("skills.core.supplyChain"),
+        "Project Management": t("skills.core.projectMgmt"),
+        "Budget Management": t("skills.core.budgetMgmt"),
+        "KPI & Forecasting": t("skills.core.kpiForecasting"),
+        "S&OP": t("skills.core.sop"),
+        "Commercial Negotiation": t("skills.core.negotiation"),
+        "Relationship Building": t("skills.core.relationship"),
+        "Decision Making": t("skills.core.decisionMaking"),
+        "Business Strategy": t("skills.core.businessStrategy"),
+        "Key Account Management": t("skills.core.keyAccount"),
+        "Change Management": t("skills.core.changeMgmt")
+      },
+      methods: {
+        "Lean Manufacturing": t("skills.methods.lean"),
+        "Six Sigma": t("skills.methods.sixSigma"),
+        "5S": t("skills.methods.5s"),
+        "Value Stream Mapping": t("skills.methods.valueStream")
+      },
+      tools: {
+        "SAP ERP": t("skills.tools.sap"),
+        "Power BI": t("skills.tools.powerbi")
+      },
+      soft: {
+        "Leadership & team management": t("skills.soft.leadership"),
+        "Customer service": t("skills.soft.customer"),
+        "Market & sales analysis": t("skills.soft.market")
+      }
+    }
+
+    return skills.map(skill => translationMap[category]?.[skill] || skill)
+  }
+
   const skillCategories = [
     {
-      title: "Core Competencies",
-      skills: profileData.skills.core,
+      title: t('skills.core.title'),
+      skills: getTranslatedSkills('core', profileData.skills.core),
       icon: <Brain className="w-6 h-6" />,
       gradient: "from-blue-500 to-cyan-500",
       description: "Strategic supply chain management expertise"
     },
     {
-      title: "Methodologies",
-      skills: profileData.skills.methods,
+      title: t('skills.methods.title'),
+      skills: getTranslatedSkills('methods', profileData.skills.methods),
       icon: <Target className="w-6 h-6" />,
       gradient: "from-green-500 to-emerald-500",
       description: "Proven optimization frameworks"
     },
     {
-      title: "Tools & Technologies",
-      skills: profileData.skills.tools,
+      title: t('skills.tools.title'),
+      skills: getTranslatedSkills('tools', profileData.skills.tools),
       icon: <Layers3 className="w-6 h-6" />,
       gradient: "from-purple-500 to-pink-500",
       description: "Advanced technology stack"
     },
     {
-      title: "Leadership Skills",
-      skills: profileData.skills.soft,
+      title: t('skills.soft.title'),
+      skills: getTranslatedSkills('soft', profileData.skills.soft),
       icon: <UsersRound className="w-6 h-6" />,
       gradient: "from-orange-500 to-red-500",
       description: "Cross-cultural team management"
@@ -69,7 +107,7 @@ export function SkillsSection() {
             Professional Expertise
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
-            Skills & Expertise
+            {t('skills.title')}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

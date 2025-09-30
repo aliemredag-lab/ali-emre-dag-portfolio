@@ -6,9 +6,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { GraduationCap, Award, BookOpen, Calendar, MapPin, Sparkles, ChevronRight } from "lucide-react"
 import { profileData } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 
 export function EducationSection() {
+  const { t } = useLanguage()
   const groupedCertifications = profileData.certifications.reduce((acc, cert) => {
     if (!acc[cert.category]) {
       acc[cert.category] = []
@@ -32,14 +34,14 @@ export function EducationSection() {
         >
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 text-lg px-6 py-2">
             <BookOpen className="w-4 h-4 mr-2" />
-            Academic Journey
+            {t("education.academicJourney")}
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
-            Education & Certifications
+            {t("education.title")}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Continuous learning and professional development across supply chain and technology domains
+            {t("education.description")}
           </p>
         </motion.div>
 
@@ -127,10 +129,10 @@ export function EducationSection() {
             <div className="text-center mb-12">
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 text-lg px-6 py-2">
                 <Award className="w-4 h-4 mr-2" />
-                Professional Certifications
+                {t("education.professionalCerts")}
               </Badge>
               <h3 className="text-3xl font-bold tracking-tight mb-4">
-                Certifications & Credentials
+                {t("education.certsCredentials")}
               </h3>
               <div className="w-16 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full" />
             </div>
@@ -162,7 +164,7 @@ export function EducationSection() {
                         <div className="space-y-3">
                           <h5 className="font-semibold text-foreground flex items-center gap-2">
                             <ChevronRight className="w-4 h-4 text-primary" />
-                            Credentials
+                            {t("education.credentials")}
                           </h5>
                           {certs.map((cert, certIndex) => (
                             <div key={certIndex} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 hover:bg-background/80 transition-colors">

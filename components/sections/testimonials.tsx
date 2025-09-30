@@ -77,62 +77,82 @@ export function TestimonialsSection() {
               viewport={{ once: true }}
               className="group"
             >
-              <Card className="neo-card h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-background to-muted/10 border-0 hover:bg-muted/20">
-                <CardContent className="p-8">
+              <Card className="relative overflow-hidden h-full border-0 bg-gradient-to-br from-white/5 via-white/10 to-white/5 dark:from-gray-900/50 dark:via-gray-800/30 dark:to-gray-900/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-500 group">
+                {/* Glassmorphism overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <CardContent className="relative p-8 z-10">
                   <div className="space-y-6">
-                    {/* Quote icon and rating */}
-                    <div className="flex items-center justify-between">
-                      <div className="p-3 rounded-2xl bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                        <Quote className="w-5 h-5" />
+                    {/* Modern header with floating elements */}
+                    <div className="flex items-start justify-between">
+                      <div className="relative">
+                        <div className="absolute -top-1 -left-1 w-10 h-10 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl blur-sm group-hover:blur-none transition-all duration-500" />
+                        <div className="relative p-3 rounded-2xl bg-gradient-to-br from-primary/10 to-purple-500/10 border border-primary/20 backdrop-blur-sm group-hover:border-primary/40 transition-all duration-500">
+                          <Quote className="w-5 h-5 text-primary" />
+                        </div>
                       </div>
                       <div className="flex gap-1">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <div key={i} className="relative">
+                            <Star className="w-4 h-4 fill-yellow-400/80 text-yellow-400 drop-shadow-sm group-hover:fill-yellow-400 group-hover:scale-110 transition-all duration-300" style={{ animationDelay: `${i * 100}ms` }} />
+                          </div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Quote */}
-                    <blockquote className="text-muted-foreground leading-relaxed italic">
-                      "{testimonial.quote}"
-                    </blockquote>
-
-                    {/* Highlight metric */}
-                    <div className="p-3 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
-                      <div className="text-center">
-                        <div className="text-lg font-bold text-primary">
-                          {testimonial.highlight}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Key Impact</div>
-                      </div>
+                    {/* Modern quote design */}
+                    <div className="relative">
+                      <div className="absolute -left-4 -top-2 text-6xl text-primary/10 font-serif select-none">"</div>
+                      <blockquote className="relative text-foreground/90 leading-relaxed text-lg font-medium pl-6">
+                        {testimonial.quote}
+                      </blockquote>
+                      <div className="absolute -right-2 -bottom-2 text-6xl text-primary/10 font-serif select-none">"</div>
                     </div>
 
-                    {/* Author info */}
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-full bg-muted/50">
-                          <User className="w-4 h-4 text-muted-foreground" />
+                    {/* Modern highlight metric */}
+                    <div className="relative p-4 rounded-2xl bg-gradient-to-r from-primary/5 via-primary/10 to-purple-500/10 border border-primary/20 backdrop-blur-sm overflow-hidden group-hover:border-primary/30 transition-all duration-500">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative text-center">
+                        <div className="text-xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent mb-1">
+                          {testimonial.highlight}
                         </div>
-                        <div>
-                          <div className="font-semibold text-foreground">{testimonial.author}</div>
+                        <div className="text-xs font-medium text-primary/60 tracking-wider uppercase">Key Impact</div>
+                      </div>
+                      {/* Floating particles effect */}
+                      <div className="absolute top-2 right-2 w-1 h-1 bg-primary/30 rounded-full animate-pulse" />
+                      <div className="absolute bottom-3 left-3 w-1 h-1 bg-purple-500/30 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                    </div>
+
+                    {/* Modern author info */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center gap-4">
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-full blur-sm" />
+                          <div className="relative p-2.5 rounded-full bg-gradient-to-br from-primary/10 to-purple-500/10 border border-primary/20 backdrop-blur-sm">
+                            <User className="w-4 h-4 text-primary" />
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300">{testimonial.author}</div>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                            <Building2 className="w-3 h-3 text-primary/60" />
+                            <span className="text-foreground/60">{testimonial.company}</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground pl-11">
-                        <Building2 className="w-3 h-3" />
-                        {testimonial.company}
-                      </div>
-                      <div className="flex gap-3 mt-4">
+                      <div className="flex gap-2 mt-6">
                         {testimonial.linkedinPostUrl && (
                           <a
                             href={testimonial.linkedinPostUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-950/40 transition-colors text-xs font-medium"
+                            className="group relative flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 hover:from-blue-500/20 hover:to-blue-600/20 hover:border-blue-500/40 transition-all duration-300 text-sm font-medium backdrop-blur-sm overflow-hidden"
                           >
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <svg className="relative w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
-                            {t("testimonials.originalPost")}
+                            <span className="relative">{t("testimonials.originalPost")}</span>
                           </a>
                         )}
 
@@ -140,12 +160,13 @@ export function TestimonialsSection() {
                           href={testimonial.linkedinUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-950/20 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-950/40 transition-colors text-xs font-medium"
+                          className="group relative flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20 text-primary hover:from-primary/20 hover:to-purple-500/20 hover:border-primary/40 transition-all duration-300 text-sm font-medium backdrop-blur-sm overflow-hidden"
                         >
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <svg className="relative w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                           </svg>
-                          {t("testimonials.linkedinProfile")}
+                          <span className="relative">{t("testimonials.linkedinProfile")}</span>
                         </a>
                       </div>
                     </div>

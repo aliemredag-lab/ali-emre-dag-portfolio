@@ -8,8 +8,10 @@ import { Mail, MapPin, User, Calendar, ExternalLink } from "lucide-react"
 import { profileData } from "@/data/profile"
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
+import { useLanguage } from "@/lib/language-context"
 
 export function HeroSection() {
+  const { t } = useLanguage()
   const [profileImage, setProfileImage] = useState<string | null>(null)
 
   // Get profile image from localStorage or use static default
@@ -30,25 +32,11 @@ export function HeroSection() {
       {/* Modern mesh gradient background */}
       <div className="absolute inset-0 mesh-gradient" />
 
-      {/* Floating geometric shapes */}
+      {/* Floating geometric shapes - optimized with CSS animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-xl floating-element"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute top-40 right-20 w-24 h-24 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/10 blur-lg floating-element"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          style={{ animationDelay: "2s" }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-gradient-to-br from-blue-500/15 to-cyan-500/5 blur-2xl floating-element"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          style={{ animationDelay: "4s" }}
-        />
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 blur-xl animate-spin-slow" />
+        <div className="absolute top-40 right-20 w-24 h-24 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/10 blur-lg animate-spin-slower" style={{ animationDirection: 'reverse', animationDelay: '2s' }} />
+        <div className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-gradient-to-br from-blue-500/15 to-cyan-500/5 blur-2xl animate-spin-slowest" style={{ animationDelay: '4s' }} />
       </div>
 
       <Container className="relative z-10">
@@ -73,10 +61,10 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-primary/20 to-purple-500/20 border border-primary/30 backdrop-blur-sm">
-                <span className="text-sm sm:text-lg font-semibold text-primary">🌍 International Supply Chain Leader</span>
+                <span className="text-sm sm:text-lg font-semibold text-primary">🌍 {t("hero.title")}</span>
               </div>
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-2 sm:px-4 lg:px-0">
-                {profileData.title}
+                {t("hero.description")}
               </p>
             </motion.div>
           </div>
@@ -95,7 +83,7 @@ export function HeroSection() {
               <Button asChild variant="outline" size="lg" className="neo-card px-8 py-6 text-lg rounded-2xl border-primary/20 hover:border-primary/40">
                 <a href="#contact">
                   <Mail className="w-5 h-5 mr-2" />
-                  Contact Me
+                  {t("hero.contactMe")}
                 </a>
               </Button>
             </motion.div>
@@ -108,7 +96,7 @@ export function HeroSection() {
               <Button asChild size="lg" className="neo-card px-8 py-6 text-lg rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground">
                 <a href="mailto:aliemredag97@gmail.com?subject=Meeting%20Request&body=Hello%20Ali%20Emre,%0A%0AI%20would%20like%20to%20schedule%20a%20meeting.%0A%0AName:%0APhone:%0APreferred%20Date:%0APreferred%20Time:%0ATopic:">
                   <Calendar className="w-5 h-5 mr-2" />
-                  Schedule Meeting
+                  {t("hero.scheduleMeeting")}
                 </a>
               </Button>
             </motion.div>
@@ -121,7 +109,7 @@ export function HeroSection() {
               <Button asChild variant="outline" size="lg" className="neo-card px-8 py-6 text-lg rounded-2xl border-primary/20 hover:border-primary/40 bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-blue-600">
                 <a href="https://www.linkedin.com/in/aliemredag/" target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-5 h-5 mr-2" />
-                  LinkedIn
+                  {t("hero.linkedin")}
                 </a>
               </Button>
             </motion.div>
@@ -150,7 +138,7 @@ export function HeroSection() {
                         {profileData.name.split(' ').map(n => n[0]).join('')}
                       </span>
                     </div>
-                    <p className="text-primary/70 text-xs sm:text-sm px-4 text-center">Loading profile photo...</p>
+                    <p className="text-primary/70 text-xs sm:text-sm px-4 text-center">{t("hero.loadingPhoto")}</p>
                   </div>
                 )}
               </div>

@@ -153,24 +153,34 @@ export default function AdminPage() {
       return
     }
 
-    // Check current password (in a real app, this would be done server-side)
-    const storedPassword = localStorage.getItem("admin-password") || profileData.admin.defaultPassword
-    if (passwordForm.currentPassword !== storedPassword) {
-      setPasswordError("Current password is incorrect")
-      return
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'change-password',
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword
+        })
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        // Reset form and close modal
+        setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" })
+        setShowPasswordModal(false)
+        setNotification("✅ Password changed successfully! Works across all browsers.")
+        setTimeout(() => setNotification(null), 5000)
+      } else {
+        setPasswordError(result.message || "Failed to change password")
+      }
+    } catch (error) {
+      console.error('Password change error:', error)
+      setPasswordError("Failed to change password. Please try again.")
     }
-
-    // Save new password to localStorage (persistent across this browser)
-    localStorage.setItem("admin-password", passwordForm.newPassword)
-
-    // Note: In production, save to database/API
-    console.log("Password changed successfully. New password:", passwordForm.newPassword)
-
-    // Reset form and close modal
-    setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" })
-    setShowPasswordModal(false)
-    setNotification("✅ Password changed successfully!")
-    setTimeout(() => setNotification(null), 4000)
   }
 
   // Simulate real-time updates

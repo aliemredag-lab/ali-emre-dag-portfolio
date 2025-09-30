@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { profileData } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import {
   CheckCircle,
@@ -20,40 +21,41 @@ import {
 } from "lucide-react"
 
 export function AboutSection() {
+  const { t } = useLanguage()
   const achievements = [
     {
       icon: <Globe className="w-5 h-5" />,
-      title: "Global Operations",
-      description: "Led supply chain operations across 9 international markets",
-      metric: "9 Countries"
+      title: t("about.globalOps"),
+      description: t("about.globalOpsDesc"),
+      metric: t("about.globalOpsMetric")
     },
     {
       icon: <TrendingUp className="w-5 h-5" />,
-      title: "Cost Optimization",
-      description: "Delivered strategic cost reductions through data-driven initiatives",
-      metric: "€5.5M Saved"
+      title: t("about.costOpt"),
+      description: t("about.costOptDesc"),
+      metric: t("about.costOptMetric")
     },
     {
       icon: <Target className="w-5 h-5" />,
-      title: "Inventory Excellence",
-      description: "Managed complex international inventory portfolios",
-      metric: "€120M+ Managed"
+      title: t("about.inventoryExc"),
+      description: t("about.inventoryExcDesc"),
+      metric: t("about.inventoryExcMetric")
     },
     {
       icon: <Users className="w-5 h-5" />,
-      title: "Team Leadership",
-      description: "Led cross-functional teams across multiple time zones",
-      metric: "8+ Years"
+      title: t("about.teamLead"),
+      description: t("about.teamLeadDesc"),
+      metric: t("about.teamLeadMetric")
     }
   ]
 
   const coreSkills = [
-    "Supply Chain Strategy & Optimization",
-    "International Operations Management",
-    "Lean Six Sigma Implementation",
-    "SAP ERP & Power BI Analytics",
-    "Cross-Cultural Team Leadership",
-    "Strategic Cost Reduction"
+    t("about.skill1"),
+    t("about.skill2"),
+    t("about.skill3"),
+    t("about.skill4"),
+    t("about.skill5"),
+    t("about.skill6")
   ]
 
   return (
@@ -69,14 +71,14 @@ export function AboutSection() {
         >
           <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
             <Sparkles className="w-4 h-4 mr-2" />
-            International Supply Chain Expertise
+            {t("about.expertise")}
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
-            About Me
+            {t('about.title')}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Transforming global supply chains through strategic leadership, innovation, and operational excellence
+            {t('about.description')}
           </p>
         </motion.div>
 
@@ -96,11 +98,11 @@ export function AboutSection() {
                     <div className="p-2 rounded-full bg-primary/10">
                       <Award className="w-5 h-5 text-primary" />
                     </div>
-                    <h3 className="text-xl font-semibold">My Journey</h3>
+                    <h3 className="text-xl font-semibold">{t("about.myJourney")}</h3>
                   </div>
 
                   <p className="text-muted-foreground leading-relaxed">
-                    {profileData.about}
+                    {t("about.journeyText")}
                   </p>
 
                   <div className="pt-4">

@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/section"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { profileData } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import {
   TrendingUp,
@@ -17,24 +18,33 @@ import {
 } from "lucide-react"
 
 export function StatsSection() {
+  const { t } = useLanguage()
   const statsWithIcons = [
     {
-      ...profileData.kpiStats[0], // Years Experience
+      ...profileData.kpiStats[0],
+      label: t('stats.yearsExp'),
+      description: t('stats.yearsExpDesc'),
       icon: <Calendar className="w-6 h-6" />,
       gradient: "from-blue-500 to-cyan-500"
     },
     {
-      ...profileData.kpiStats[1], // Cost Saved
+      ...profileData.kpiStats[1],
+      label: t('stats.costSaved'),
+      description: t('stats.costSavedDesc'),
       icon: <DollarSign className="w-6 h-6" />,
       gradient: "from-green-500 to-emerald-500"
     },
     {
-      ...profileData.kpiStats[2], // Inventory Managed
+      ...profileData.kpiStats[2],
+      label: t('stats.inventoryManaged'),
+      description: t('stats.inventoryManagedDesc'),
       icon: <TrendingUp className="w-6 h-6" />,
       gradient: "from-purple-500 to-pink-500"
     },
     {
-      ...profileData.kpiStats[3], // Countries Coverage
+      ...profileData.kpiStats[3],
+      label: t('stats.countriesCoverage'),
+      description: t('stats.countriesCoverageDesc'),
       icon: <Globe className="w-6 h-6" />,
       gradient: "from-orange-500 to-red-500"
     }

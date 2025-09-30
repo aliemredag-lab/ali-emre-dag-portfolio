@@ -9,8 +9,10 @@ import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github, Folder, Calendar, Star, Sparkles, Code2 } from "lucide-react"
 import { motion } from "framer-motion"
 import { profileData, type Project } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 
 export function ProjectsSection() {
+  const { t } = useLanguage()
   const [projects, setProjects] = useState<Project[]>(profileData.projects)
 
   // Load projects from localStorage or use static default
@@ -42,7 +44,15 @@ export function ProjectsSection() {
     }
   }
 
-  const ProjectCard = ({ project }: { project: Project }) => (
+  const getProjectData = (projectId: string, fallbackTitle: string, fallbackDescription: string) => {
+    const title = t(`projects.project${projectId}.title`) || fallbackTitle
+    const description = t(`projects.project${projectId}.description`) || fallbackDescription
+    return { title, description }
+  }
+
+  const ProjectCard = ({ project }: { project: Project }) => {
+    const projectData = getProjectData(project.id, project.title, project.description)
+    return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +73,7 @@ export function ProjectsSection() {
             <div className="w-full h-full bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 flex items-center justify-center">
               <div className="text-center">
                 <Folder className="w-20 h-20 text-primary/70 mx-auto mb-4" />
-                <div className="text-lg font-semibold text-primary/90">{project.title}</div>
+                <div className="text-lg font-semibold text-primary/90">{projectData.title}</div>
               </div>
             </div>
           )}
@@ -71,8 +81,8 @@ export function ProjectsSection() {
           {/* Status badge overlay */}
           <div className="absolute top-4 right-4">
             <Badge className={`${getStatusColor(project.status)} font-medium`}>
-              {project.status === 'in-progress' ? 'In Progress' :
-               project.status === 'completed' ? 'Completed' : 'Planned'}
+              {project.status === 'in-progress' ? t('projects.inProgress') :
+               project.status === 'completed' ? t('projects.completed') : t('projects.planned')}
             </Badge>
           </div>
         </div>
@@ -82,16 +92,16 @@ export function ProjectsSection() {
           {/* Title and Description */}
           <div className="space-y-3">
             <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-              {project.title}
+              {projectData.title}
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              {project.description}
+              {projectData.description}
             </p>
           </div>
 
           {/* Technologies */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Technologies</h4>
+            <h4 className="text-sm font-semibold text-foreground">{t("projects.technologies")}</h4>
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech, index) => (
                 <Badge key={index} variant="secondary" className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors">
@@ -107,7 +117,7 @@ export function ProjectsSection() {
               <Button asChild size="sm" className="flex-1 bg-primary hover:bg-primary/90">
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="w-4 h-4 mr-2" />
-                  Live Demo
+                  {t("projects.liveDemo")}
                 </a>
               </Button>
             )}
@@ -115,7 +125,7 @@ export function ProjectsSection() {
               <Button asChild size="sm" variant="outline" className="flex-1 hover:bg-muted">
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                   <Github className="w-4 h-4 mr-2" />
-                  Code
+                  {t("projects.code")}
                 </a>
               </Button>
             )}
@@ -132,7 +142,8 @@ export function ProjectsSection() {
         </CardContent>
       </Card>
     </motion.div>
-  )
+    )
+  }
 
   return (
     <Section id="projects" className="py-24 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
@@ -151,10 +162,10 @@ export function ProjectsSection() {
             <Code2 className="w-4 h-4 mr-2" />
             Development Portfolio
           </Badge>
-          <h2 className="text-4xl font-bold tracking-tight mb-4">My Projects</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">{t('projects.title')}</h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-purple-500 mx-auto rounded-full mb-6" />
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Projects I've developed using modern technologies and supply chain expertise
+            {t("projects.description")}
           </p>
         </motion.div>
 
@@ -185,9 +196,9 @@ export function ProjectsSection() {
             className="text-center py-16"
           >
             <Folder className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-xl font-medium mb-2">No projects added yet</h3>
+            <h3 className="text-xl font-medium mb-2">{t('projects.noProjects')}</h3>
             <p className="text-muted-foreground">
-              You can add your projects from the admin panel
+              {t('projects.addFromAdmin')}
             </p>
           </motion.div>
         )}

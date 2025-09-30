@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Download, Linkedin } from "lucide-react"
 import { profileData } from "@/data/profile"
+import { useLanguage } from "@/lib/language-context"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -23,6 +24,7 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>
 
 export function ContactSection() {
+  const { t } = useLanguage()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -74,19 +76,19 @@ export function ContactSection() {
               <div className="space-y-4">
                 <ContactCard
                   icon={<Mail className="w-5 h-5" />}
-                  title="Email"
+                  title={t("contact.email")}
                   value={profileData.contact.email}
                   href={`mailto:${profileData.contact.email}`}
                 />
                 <ContactCard
                   icon={<Phone className="w-5 h-5" />}
-                  title="Phone"
+                  title={t("contact.phone")}
                   value={profileData.contact.phone}
                   href={`tel:${profileData.contact.phone}`}
                 />
                 <ContactCard
                   icon={<MapPin className="w-5 h-5" />}
-                  title="Location"
+                  title={t("contact.location")}
                   value={profileData.contact.location}
                 />
               </div>
@@ -123,7 +125,7 @@ export function ContactSection() {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div>
                     <Input
-                      placeholder="Your Name"
+                      placeholder={t("contact.nameLabel")}
                       {...register("name")}
                       className={`bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 ${errors.name ? "border-red-500" : ""}`}
                     />
@@ -135,7 +137,7 @@ export function ContactSection() {
                   <div>
                     <Input
                       type="email"
-                      placeholder="Your Email"
+                      placeholder={t("contact.emailLabel")}
                       {...register("email")}
                       className={`bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 ${errors.email ? "border-red-500" : ""}`}
                     />
@@ -146,7 +148,7 @@ export function ContactSection() {
 
                   <div>
                     <Textarea
-                      placeholder="Your Message"
+                      placeholder={t("contact.messageLabel")}
                       rows={5}
                       {...register("message")}
                       className={`bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 ${errors.message ? "border-red-500" : ""}`}
@@ -157,7 +159,7 @@ export function ContactSection() {
                   </div>
 
                   <Button type="submit" disabled={isSubmitting} className="w-full">
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {isSubmitting ? t("contact.sending") : t("contact.sendMessage")}
                   </Button>
                 </form>
               )}
