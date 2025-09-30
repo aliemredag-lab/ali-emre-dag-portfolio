@@ -23,6 +23,7 @@ import {
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { profileData, type Project } from "@/data/profile"
+import { validateAndSanitizeText, sanitizeInput } from "@/lib/security"
 
 export default function ProjectsManagementPage() {
   const router = useRouter()
@@ -68,16 +69,41 @@ export default function ProjectsManagementPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const projectData: Project = {
-      id: editingProject?.id || Date.now().toString(),
-      title: formData.title,
-      description: formData.description,
-      technologies: formData.technologies.split(',').map(t => t.trim()).filter(Boolean),
-      liveUrl: formData.liveUrl || undefined,
-      githubUrl: formData.githubUrl || undefined,
-      status: formData.status,
-      featured: formData.featured,
-      createdAt: editingProject?.createdAt || new Date().toISOString().split('T')[0]
+    let projectData: Project
+
+    try {
+      // Sanitize and validate all inputs
+      const sanitizedTitle = validateAndSanitizeText(formData.title, 100)
+      const sanitizedDescription = validateAndSanitizeText(formData.description, 2000)
+      const sanitizedTechnologies = sanitizeInput(formData.technologies)
+      const sanitizedLiveUrl = formData.liveUrl ? sanitizeInput(formData.liveUrl) : undefined
+      const sanitizedGithubUrl = formData.githubUrl ? sanitizeInput(formData.githubUrl) : undefined
+
+      // Additional validation
+      if (!sanitizedTitle || sanitizedTitle.length < 3) {
+        alert('Project title must be at least 3 characters long')
+        return
+      }
+
+      if (!sanitizedDescription || sanitizedDescription.length < 10) {
+        alert('Project description must be at least 10 characters long')
+        return
+      }
+
+      projectData = {
+        id: editingProject?.id || Date.now().toString(),
+        title: sanitizedTitle,
+        description: sanitizedDescription,
+        technologies: sanitizedTechnologies.split(',').map(t => sanitizeInput(t.trim())).filter(Boolean),
+        liveUrl: sanitizedLiveUrl || undefined,
+        githubUrl: sanitizedGithubUrl || undefined,
+        status: formData.status,
+        featured: formData.featured,
+        createdAt: editingProject?.createdAt || new Date().toISOString().split('T')[0]
+      }
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Input validation failed')
+      return
     }
 
     let newProjects: Project[]

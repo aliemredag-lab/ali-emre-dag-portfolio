@@ -1,5 +1,5 @@
 {
-  "password": "admin123",
-  "lastChanged": "2024-01-01T00:00:00.000Z",
-  "version": "1.0"
+  "passwordHash": "$2b$12$4h8u2u3EBKbXeAMFeYz9tO3OnU9MpY/BeS2lWhUOFHvi2Wy2yFBt2",
+  "lastChanged": "2025-09-30T11:27:22.764Z",
+  "version": "2.0"
 }

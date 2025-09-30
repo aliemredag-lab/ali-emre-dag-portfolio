@@ -71,11 +71,7 @@ export interface Project {
   createdAt: string
 }
 
-export interface AdminConfig {
-  defaultPassword: string;
-  username: string;
-  currentPassword?: string;
-}
+// AdminConfig removed for security - now managed in /app/api/admin/auth/route.ts
 
 export interface ProfileData {
   name: string;
@@ -100,7 +96,9 @@ export interface ProfileData {
   contact: ContactInfo;
   posts: LinkedInPost[];
   projects: Project[];
-  admin: AdminConfig;
+  admin: {
+    username: string;
+  };
 }
 
 export const profileData: ProfileData = {
@@ -382,7 +380,8 @@ The biggest success factor I observed in my European projects was recognizing te
     }
   ],
   admin: {
-    username: 'admin',
-    defaultPassword: 'admin123'
+    username: 'admin'
+    // Password is now securely managed via /api/admin/auth with bcrypt hashing
+    // Default password is SecureAdmin2024! or set via ADMIN_PASSWORD env var
   }
 };

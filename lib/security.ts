@@ -1,4 +1,6 @@
 // Security utilities and validation functions
+import DOMPurify from 'dompurify'
+import validator from 'validator'
 
 export const SECURITY_CONFIG = {
   MAX_LOGIN_ATTEMPTS: 5,
@@ -8,14 +10,54 @@ export const SECURITY_CONFIG = {
   MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
 }
 
-// Input sanitization
+// Advanced input sanitization with DOMPurify and validator
 export function sanitizeInput(input: string): string {
-  return input
+  if (!input || typeof input !== 'string') return ''
+
+  // Remove dangerous HTML/JavaScript
+  let sanitized = DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+    KEEP_CONTENT: true
+  })
+
+  // Additional security checks
+  sanitized = sanitized
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/javascript:/gi, '')
     .replace(/on\w+\s*=\s*"[^"]*"/gi, '')
     .replace(/on\w+\s*=\s*'[^']*'/gi, '')
+    .replace(/data:/gi, '')
+    .replace(/vbscript:/gi, '')
+    .replace(/expression\s*\(/gi, '')
     .trim()
+
+  return sanitized
+}
+
+// Enhanced input validation
+export function validateAndSanitizeText(input: string, maxLength: number = 1000): string {
+  if (!input) return ''
+
+  // Validate length
+  if (input.length > maxLength) {
+    throw new Error(`Input too long. Maximum ${maxLength} characters allowed.`)
+  }
+
+  // Sanitize the input
+  return sanitizeInput(input)
+}
+
+// Advanced email validation
+export function validateEmailSecure(email: string): boolean {
+  if (!email || typeof email !== 'string') return false
+
+  // Use validator library for robust email validation
+  return validator.isEmail(email, {
+    allow_utf8_local_part: false,
+    require_tld: true,
+    allow_ip_domain: false
+  }) && email.length <= 254
 }
 
 // Email validation
@@ -30,38 +72,21 @@ export function isValidPhone(phone: string): boolean {
   return phoneRegex.test(phone)
 }
 
-// Admin authentication check
+// Admin authentication - DEPRECATED - Use /api/admin/auth instead
+// This function is kept for compatibility but should not be used for real authentication
 export function isValidAdmin(credentials: { username: string; password: string }): boolean {
-  // In production, this should use hashed passwords and database
-  const adminCredentials = {
-    username: process.env.ADMIN_USERNAME || 'admin',
-    password: process.env.ADMIN_PASSWORD || 'admin123'
-  }
-
-  return credentials.username === adminCredentials.username &&
-         credentials.password === adminCredentials.password
+  console.warn('⚠️ DEPRECATED: isValidAdmin() should not be used. Use /api/admin/auth endpoint instead.')
+  return false // Always return false for security
 }
 
-// Rate limiting check
+// Client-side rate limiting - DEPRECATED and INSECURE
+// This function should NOT be used for security as it can be easily bypassed
+// Use server-side rate limiting in API endpoints instead
 export function checkRateLimit(identifier: string, action: string): boolean {
-  if (typeof window === 'undefined') return true
+  console.warn('⚠️ SECURITY WARNING: Client-side rate limiting is insecure and can be bypassed!')
+  console.warn('Use server-side rate limiting in API endpoints instead.')
 
-  const key = `rateLimit_${action}_${identifier}`
-  const attempts = JSON.parse(localStorage.getItem(key) || '[]') as number[]
-  const now = Date.now()
-
-  // Remove attempts older than 1 hour
-  const recentAttempts = attempts.filter(time => now - time < 60 * 60 * 1000)
-
-  // Check if exceeded limit (10 attempts per hour)
-  if (recentAttempts.length >= 10) {
-    return false
-  }
-
-  // Add current attempt
-  recentAttempts.push(now)
-  localStorage.setItem(key, JSON.stringify(recentAttempts))
-
+  // Return true to not block legitimate users, as server-side protection is in place
   return true
 }
 
@@ -119,18 +144,24 @@ export function createSession(): void {
   localStorage.setItem('admin-auth', JSON.stringify(sessionData))
 }
 
-// Content Security Policy
+// Content Security Policy - Secure configuration
 export function getCSPHeader(): string {
   return [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+    // Remove unsafe-inline and unsafe-eval for better security
+    "script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com",
+    // Only allow unsafe-inline for styles if absolutely necessary - consider using nonces
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
     "connect-src 'self' https://www.google-analytics.com https://api.vercel.com",
     "frame-ancestors 'none'",
     "form-action 'self'",
-    "base-uri 'self'"
+    "base-uri 'self'",
+    "object-src 'none'",
+    "media-src 'self'",
+    // Add security headers
+    "upgrade-insecure-requests"
   ].join('; ')
 }
 

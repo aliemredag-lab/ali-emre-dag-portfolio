@@ -1,35 +1,70 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import bcrypt from 'bcryptjs'
 
 const CONFIG_PATH = path.join(process.cwd(), 'data', 'admin-config.json')
 
 interface AdminConfig {
-  password: string
+  passwordHash: string
   lastChanged: string
   version: string
 }
 
-// Ensure config file exists - use fallback password for production
-function ensureConfigFile(): AdminConfig {
-  // For production, use hardcoded password since environment variables might not work
-  const productionPassword = 'admin123'
+// Ensure config file exists with secure hashed password
+async function ensureConfigFile(): Promise<AdminConfig> {
+  try {
+    // Try to read existing config
+    if (fs.existsSync(CONFIG_PATH)) {
+      const configData = fs.readFileSync(CONFIG_PATH, 'utf8')
+      const config = JSON.parse(configData)
 
-  // Try environment variable first, then fallback to hardcoded
-  const password = process.env.ADMIN_PASSWORD || productionPassword
+      // If config has old plaintext password, convert to hash
+      if (config.password && !config.passwordHash) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('🔄 Converting plaintext password to hash...')
+        }
+        const passwordHash = await bcrypt.hash(config.password, 12)
+        const newConfig = {
+          passwordHash,
+          lastChanged: new Date().toISOString(),
+          version: '2.0'
+        }
+        fs.writeFileSync(CONFIG_PATH, JSON.stringify(newConfig, null, 2))
+        return newConfig
+      }
 
-  console.log('Config check:', {
-    hasEnvVar: !!process.env.ADMIN_PASSWORD,
-    envValue: process.env.ADMIN_PASSWORD,
-    finalPassword: password
-  })
-
-  // Always return the same structure for consistency
-  return {
-    password: password,
-    lastChanged: new Date().toISOString(),
-    version: '1.0'
+      // Return existing hashed config
+      if (config.passwordHash) {
+        return config
+      }
+    }
+  } catch (error) {
+    console.log('Config file not found or corrupted, creating new one...')
   }
+
+  // Create new config with secure default
+  const defaultPassword = process.env.ADMIN_PASSWORD || 'SecureAdmin2024!'
+  const passwordHash = await bcrypt.hash(defaultPassword, 12)
+
+  const newConfig: AdminConfig = {
+    passwordHash,
+    lastChanged: new Date().toISOString(),
+    version: '2.0'
+  }
+
+  // Ensure directory exists
+  const configDir = path.dirname(CONFIG_PATH)
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true })
+  }
+
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify(newConfig, null, 2))
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('✅ Created secure config with hashed password')
+  }
+  return newConfig
 }
 
 // Simple in-memory rate limiting
@@ -62,7 +97,9 @@ const checkRateLimit = (ip: string): boolean => {
 
 // Login endpoint
 export async function POST(request: NextRequest) {
-  console.log('=== ADMIN AUTH API CALLED ===')
+  if (process.env.NODE_ENV === 'development') {
+    console.log('=== ADMIN AUTH API CALLED ===')
+  }
 
   // Rate limiting
   const clientIP = request.ip || 'unknown'
@@ -75,28 +112,42 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    console.log('Parsing request body...')
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Parsing request body...')
+    }
     const body = await request.json()
-    console.log('Request body:', body)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Request body received')
+    }
 
     const { password, action } = body
-    console.log('Extracted:', { action, password })
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Extracted:', { action, passwordLength: password?.length })
+    }
 
-    console.log('Getting config...')
-    const config = ensureConfigFile()
-    console.log('Config loaded:', config)
-
-    console.log('Login attempt:', {
-      action,
-      receivedPassword: password,
-      expectedPassword: config.password,
-      match: password === config.password
-    })
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Getting config...')
+    }
+    const config = await ensureConfigFile()
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Config loaded (hash hidden for security)')
+    }
 
     if (action === 'login') {
-      console.log('Processing login action...')
-      if (password === config.password) {
-        console.log('✅ Password match - Login successful')
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Processing login action...')
+      }
+
+      // Verify password against hash
+      const isValidPassword = await bcrypt.compare(password, config.passwordHash)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Password verification result:', isValidPassword)
+      }
+
+      if (isValidPassword) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('✅ Password match - Login successful')
+        }
 
         // Generate secure session token
         const timestamp = Date.now()
@@ -108,7 +159,9 @@ export async function POST(request: NextRequest) {
           token: sessionToken
         })
       } else {
-        console.log('❌ Password mismatch')
+        if (process.env.NODE_ENV === 'development') {
+          console.log('❌ Password mismatch')
+        }
 
         // Add delay to prevent brute force attacks
         await new Promise(resolve => setTimeout(resolve, 1000))
@@ -121,27 +174,32 @@ export async function POST(request: NextRequest) {
     }
 
     if (action === 'change-password') {
-      const { currentPassword, newPassword } = await request.json()
+      const { currentPassword, newPassword } = body
 
-      if (currentPassword !== config.password) {
+      // Verify current password
+      const isCurrentPasswordValid = await bcrypt.compare(currentPassword, config.passwordHash)
+      if (!isCurrentPasswordValid) {
         return NextResponse.json({
           success: false,
           message: 'Current password is incorrect'
         }, { status: 401 })
       }
 
-      if (!newPassword || newPassword.length < 6) {
+      if (!newPassword || newPassword.length < 8) {
         return NextResponse.json({
           success: false,
-          message: 'New password must be at least 6 characters'
+          message: 'New password must be at least 8 characters'
         }, { status: 400 })
       }
 
+      // Hash new password
+      const newPasswordHash = await bcrypt.hash(newPassword, 12)
+
       // Update password in config file
       const newConfig: AdminConfig = {
-        ...config,
-        password: newPassword,
-        lastChanged: new Date().toISOString()
+        passwordHash: newPasswordHash,
+        lastChanged: new Date().toISOString(),
+        version: '2.0'
       }
 
       fs.writeFileSync(CONFIG_PATH, JSON.stringify(newConfig, null, 2))
@@ -170,13 +228,14 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   console.log('=== GET CONFIG API CALLED ===')
   try {
-    const config = ensureConfigFile()
+    const config = await ensureConfigFile()
     console.log('Returning config info')
     return NextResponse.json({
       lastChanged: config.lastChanged,
       version: config.version,
       status: 'API is working',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      security: 'bcrypt-enabled'
     })
   } catch (error) {
     console.error('Get config error:', error)
