@@ -34,21 +34,39 @@ function ensureConfigFile(): AdminConfig {
 
 // Login endpoint
 export async function POST(request: NextRequest) {
-  try {
-    const { password, action } = await request.json()
-    const config = ensureConfigFile()
+  console.log('=== ADMIN AUTH API CALLED ===')
 
-    console.log('Login attempt:', { action, receivedPassword: password, expectedPassword: config.password })
+  try {
+    console.log('Parsing request body...')
+    const body = await request.json()
+    console.log('Request body:', body)
+
+    const { password, action } = body
+    console.log('Extracted:', { action, password })
+
+    console.log('Getting config...')
+    const config = ensureConfigFile()
+    console.log('Config loaded:', config)
+
+    console.log('Login attempt:', {
+      action,
+      receivedPassword: password,
+      expectedPassword: config.password,
+      match: password === config.password
+    })
 
     if (action === 'login') {
+      console.log('Processing login action...')
       if (password === config.password) {
-        console.log('Login successful')
+        console.log('✅ Password match - Login successful')
         return NextResponse.json({
           success: true,
           message: 'Login successful'
         })
       } else {
-        console.log('Password mismatch')
+        console.log('❌ Password mismatch')
+        console.log('Received type:', typeof password, 'Expected type:', typeof config.password)
+        console.log('Received length:', password?.length, 'Expected length:', config.password?.length)
         return NextResponse.json({
           success: false,
           message: 'Invalid password'
@@ -104,17 +122,22 @@ export async function POST(request: NextRequest) {
 
 // Get current config (without password)
 export async function GET() {
+  console.log('=== GET CONFIG API CALLED ===')
   try {
     const config = ensureConfigFile()
+    console.log('Returning config info')
     return NextResponse.json({
       lastChanged: config.lastChanged,
-      version: config.version
+      version: config.version,
+      status: 'API is working',
+      timestamp: new Date().toISOString()
     })
   } catch (error) {
     console.error('Get config error:', error)
     return NextResponse.json({
       success: false,
-      message: 'Server error'
+      message: 'Server error',
+      error: error.message
     }, { status: 500 })
   }
 }
