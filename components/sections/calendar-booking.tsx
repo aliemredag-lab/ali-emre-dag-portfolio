@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/language-context"
+import { ProtectedContent } from "@/components/protected-content"
 
 interface MeetingType {
   title: string
@@ -66,8 +67,12 @@ export function CalendarBooking() {
   ]
 
   return (
-    <section id="book-consultation" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
-      <div className="container mx-auto px-4">
+    <ProtectedContent
+      title="Schedule a Consultation"
+      description="Register to book a meeting and discuss your supply chain challenges"
+    >
+      <section id="book-consultation" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
+        <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -199,5 +204,6 @@ export function CalendarBooking() {
         </motion.div>
       </div>
     </section>
+    </ProtectedContent>
   )
 }

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { profileData } from "@/data/profile"
 import { useLanguage } from "@/lib/language-context"
+import { ProtectedContent } from "@/components/protected-content"
 import Link from "next/link"
 
 const categoryColors: Record<string, string> = {
@@ -44,8 +45,12 @@ export function InsightsBlog() {
   }
 
   return (
-    <section id="insights-blog" className="py-20 bg-gradient-to-b from-background/50 via-background to-background/50">
-      <div className="container mx-auto px-4">
+    <ProtectedContent
+      title="LinkedIn Insights & Articles"
+      description="Register to access exclusive insights and thought leadership content"
+    >
+      <section id="insights-blog" className="py-20 bg-gradient-to-b from-background/50 via-background to-background/50">
+        <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -260,5 +265,6 @@ export function InsightsBlog() {
         </motion.div>
       </div>
     </section>
+    </ProtectedContent>
   )
 }

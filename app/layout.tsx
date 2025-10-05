@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/lib/language-context'
+import { AuthProvider } from '@/lib/auth-context'
 import { Chatbot } from '@/components/chatbot'
 
 const inter = Inter({
@@ -168,17 +169,19 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased scroll-smooth selection:bg-primary/20 selection:text-primary-foreground`}>
         <LanguageProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="relative min-h-screen bg-background">
-              {children}
-              <Chatbot />
-            </div>
-          </ThemeProvider>
+          <AuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="relative min-h-screen bg-background">
+                {children}
+                <Chatbot />
+              </div>
+            </ThemeProvider>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -1,0 +1,66 @@
+
+> ali-emre-dag-portfolio@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.33
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+
+
+Source path: /Users/emremacbook/Documents/GitHub/ali-emre-dag-portfolio/app/globals.css
+Setting up new context...
+Finding changed files: 5.369ms
+Reading changed files: 88.823ms
+Sorting candidates: 3.137ms
+Generate rules: 78.013ms
+Build stylesheet: 2.759ms
+Potential classes:  5510
+Active contexts:  1
+JIT TOTAL: 372.686ms
+
+
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/19) ...
+   Generating static pages (4/19) 
+   Generating static pages (9/19) 
+   Generating static pages (14/19) 
+ ✓ Generating static pages (19/19)
+   Finalizing page optimization ...
+   Collecting build traces ...
+ ⚠ Statically exporting a Next.js application via `next export` disables API routes and middleware.
+This command is meant for static-only hosts, and is not necessary to make your application static.
+Pages in your application without server-side data dependencies will be automatically statically exported by `next build`, including pages powered by `getStaticProps`.
+Learn more: https://nextjs.org/docs/messages/api-routes-static-export
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    51.9 kB         225 kB
+├ ○ /_not-found                          873 B          88.3 kB
+├ ○ /admin                               7.62 kB         146 kB
+├ ○ /admin/chats                         4.8 kB          142 kB
+├ ○ /admin/edit                          3.81 kB         132 kB
+├ ○ /admin/login                         3.17 kB         131 kB
+├ ○ /admin/media                         3.73 kB         132 kB
+├ ○ /admin/messages                      3.77 kB         141 kB
+├ ○ /admin/posts                         13.5 kB         175 kB
+├ ○ /admin/projects                      13.2 kB         147 kB
+├ ƒ /api/admin/auth                      0 B                0 B
+├ ƒ /api/chatbot                         0 B                0 B
+├ ƒ /api/contact                         0 B                0 B
+├ ○ /posts                               3.78 kB         154 kB
+├ ○ /resume                              5.88 kB         110 kB
+├ ○ /robots.txt                          0 B                0 B
+└ ○ /sitemap.xml                         0 B                0 B
++ First Load JS shared by all            87.4 kB
+  ├ chunks/117-7c580c81e8aad472.js       31.8 kB
+  ├ chunks/fd9d1056-ad15f396ddf9b7e5.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             26.9 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

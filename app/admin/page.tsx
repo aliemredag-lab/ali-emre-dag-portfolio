@@ -398,6 +398,12 @@ export default function AdminPage() {
                       LinkedIn Articles
                     </a>
                   </Button>
+                  <Button className="w-full justify-start" variant="outline" asChild>
+                    <a href="/admin/users">
+                      <Users className="w-4 h-4 mr-2" />
+                      Manage Users
+                    </a>
+                  </Button>
                   <Button
                     className="w-full justify-start"
                     variant="outline"
