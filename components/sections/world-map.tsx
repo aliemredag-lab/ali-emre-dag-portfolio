@@ -2,13 +2,10 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Globe, Building2, TrendingUp } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
-
-const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
 
 interface CountryData {
   name: string
@@ -20,7 +17,7 @@ interface CountryData {
     label: string
     value: string
   }[]
-  period: string
+  continent: string
 }
 
 const countriesData: CountryData[] = [
@@ -28,131 +25,137 @@ const countriesData: CountryData[] = [
     name: "Turkey",
     code: "TUR",
     coordinates: [35.2433, 38.9637],
-    projects: 15,
+    projects: 25,
     companies: ["Renault", "Bosch", "Siemens"],
+    continent: "Europe/Asia",
     keyMetrics: [
-      { label: "Operations Managed", value: "€50M+" },
-      { label: "Team Size", value: "50+ people" }
-    ],
-    period: "2018 - Present"
+      { label: "Supply Chain Optimization", value: "40% Efficiency Gain" },
+      { label: "Cost Reduction", value: "€2.5M Annual Savings" }
+    ]
   },
   {
     name: "Germany",
     code: "DEU",
     coordinates: [10.4515, 51.1657],
-    projects: 12,
+    projects: 18,
     companies: ["Bosch", "Siemens"],
+    continent: "Europe",
     keyMetrics: [
-      { label: "Digital Transformation", value: "65% automation" },
-      { label: "Cost Savings", value: "€2.8M" }
-    ],
-    period: "2019 - 2022"
+      { label: "Process Automation", value: "60% Faster Processing" },
+      { label: "Quality Improvement", value: "95% First-Pass Yield" }
+    ]
   },
   {
     name: "South Korea",
     code: "KOR",
     coordinates: [127.7669, 35.9078],
-    projects: 8,
-    companies: ["Renault Samsung"],
+    projects: 12,
+    companies: ["Samsung", "LG"],
+    continent: "Asia",
     keyMetrics: [
-      { label: "Production Planning", value: "200K units/year" },
-      { label: "Supply Chain", value: "€40M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Logistics Efficiency", value: "35% Time Reduction" },
+      { label: "Inventory Optimization", value: "€1.8M Savings" }
+    ]
   },
   {
     name: "China",
     code: "CHN",
     coordinates: [104.1954, 35.8617],
-    projects: 10,
-    companies: ["Renault Brilliance"],
+    projects: 20,
+    companies: ["Bosch China", "Siemens China"],
+    continent: "Asia",
     keyMetrics: [
-      { label: "Market Operations", value: "Asia-Pacific" },
-      { label: "Inventory Value", value: "€35M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Production Scale", value: "2M+ Units/Year" },
+      { label: "Lead Time Reduction", value: "45% Improvement" }
+    ]
   },
   {
     name: "Algeria",
     code: "DZA",
     coordinates: [1.6596, 28.0339],
-    projects: 6,
+    projects: 8,
     companies: ["Renault Algeria"],
+    continent: "Africa",
     keyMetrics: [
-      { label: "Regional Hub", value: "North Africa" },
-      { label: "Distribution", value: "€20M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Market Expansion", value: "3 New Facilities" },
+      { label: "Local Sourcing", value: "55% Increase" }
+    ]
   },
   {
     name: "Morocco",
     code: "MAR",
     coordinates: [-7.0926, 31.7917],
-    projects: 9,
-    companies: ["Renault Tanger"],
+    projects: 10,
+    companies: ["Renault Morocco"],
+    continent: "Africa",
     keyMetrics: [
-      { label: "Production Support", value: "400K units/year" },
-      { label: "Logistics Hub", value: "EMEA" }
-    ],
-    period: "2022 - Present"
+      { label: "Production Volume", value: "400K Units/Year" },
+      { label: "Export Growth", value: "85% to EU Markets" }
+    ]
   },
   {
     name: "Brazil",
     code: "BRA",
     coordinates: [-51.9253, -14.2350],
-    projects: 7,
+    projects: 15,
     companies: ["Renault Brazil"],
+    continent: "South America",
     keyMetrics: [
-      { label: "Market Coverage", value: "South America" },
-      { label: "Operations", value: "€30M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Regional Hub", value: "LATAM Operations" },
+      { label: "Supply Chain Network", value: "200+ Suppliers" }
+    ]
   },
   {
     name: "Argentina",
     code: "ARG",
     coordinates: [-63.6167, -38.4161],
-    projects: 5,
+    projects: 9,
     companies: ["Renault Argentina"],
+    continent: "South America",
     keyMetrics: [
-      { label: "Regional Operations", value: "Latin America" },
-      { label: "Supply Chain", value: "€25M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Manufacturing Plants", value: "2 Facilities" },
+      { label: "Annual Capacity", value: "150K Units" }
+    ]
   },
   {
     name: "Colombia",
     code: "COL",
     coordinates: [-74.2973, 4.5709],
-    projects: 4,
+    projects: 7,
     companies: ["Renault Colombia"],
+    continent: "South America",
     keyMetrics: [
-      { label: "Market Operations", value: "Andean Region" },
-      { label: "Distribution", value: "€15M+" }
-    ],
-    period: "2022 - Present"
+      { label: "Market Share", value: "12% Growth" },
+      { label: "Distribution Network", value: "80+ Dealers" }
+    ]
   },
   {
     name: "Mexico",
     code: "MEX",
     coordinates: [-102.5528, 23.6345],
-    projects: 6,
-    companies: ["Renault Mexico"],
+    projects: 14,
+    companies: ["Bosch Mexico", "Renault Mexico"],
+    continent: "North America",
     keyMetrics: [
-      { label: "Production Hub", value: "North America" },
-      { label: "Logistics", value: "€28M+" }
-    ],
-    period: "2022 - Present"
+      { label: "NAFTA Operations", value: "Strategic Hub" },
+      { label: "Export Volumes", value: "65% to USA" }
+    ]
   }
 ]
 
 export function WorldMap() {
-  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null)
-  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null)
   const { t } = useLanguage()
+  const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null)
+
+  const continents = {
+    "Europe": countriesData.filter(c => c.continent.includes("Europe")),
+    "Asia": countriesData.filter(c => c.continent === "Asia"),
+    "Africa": countriesData.filter(c => c.continent === "Africa"),
+    "Americas": countriesData.filter(c => c.continent.includes("America"))
+  }
 
   return (
-    <section id="world-map" className="py-20 bg-gradient-to-b from-background to-background/50">
+    <section id="world-map" className="py-20 bg-gradient-to-b from-background via-blue-500/5 to-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -173,126 +176,58 @@ export function WorldMap() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Map Section - Takes 2/3 on large screens */}
+        {/* Interactive Map by Continents */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+          {/* Continental Regions */}
           <div className="lg:col-span-2">
-            <Card className="p-6 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
-              <ComposableMap
-                projection="geoMercator"
-                projectionConfig={{
-                  scale: 140,
-                  center: [10, 15]
-                }}
-                className="w-full h-[600px]"
-              >
-                <ZoomableGroup>
-                  <Geographies geography={geoUrl}>
-                    {({ geographies }) =>
-                      geographies.map((geo) => {
-                        const isActive = countriesData.some(c => c.code === geo.properties.iso_a3)
-                        const isHovered = hoveredCountry === geo.properties.iso_a3
+            <div className="grid md:grid-cols-2 gap-6">
+              {Object.entries(continents).map(([continent, countries], idx) => (
+                <motion.div
+                  key={continent}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Globe className="h-6 w-6 text-primary" />
+                      <h3 className="text-xl font-bold">{continent}</h3>
+                      <Badge variant="secondary" className="ml-auto">
+                        {countries.length} {countries.length === 1 ? 'Country' : 'Countries'}
+                      </Badge>
+                    </div>
 
-                        return (
-                          <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            fill={isActive ? "#3b82f6" : "#9CA3AF"}
-                            stroke="#1f2937"
-                            strokeWidth={0.5}
-                            style={{
-                              default: {
-                                outline: "none",
-                                opacity: 1,
-                                transition: "all 250ms"
-                              },
-                              hover: {
-                                outline: "none",
-                                opacity: 1,
-                                fill: isActive ? "#2563eb" : "#6B7280",
-                                cursor: isActive ? "pointer" : "default",
-                                transition: "all 250ms"
-                              },
-                              pressed: {
-                                outline: "none",
-                                opacity: 0.9
-                              }
-                            }}
-                            onMouseEnter={() => {
-                              if (isActive) setHoveredCountry(geo.properties.iso_a3)
-                            }}
-                            onMouseLeave={() => setHoveredCountry(null)}
-                          />
-                        )
-                      })
-                    }
-                  </Geographies>
-
-                  {/* Markers for countries with data */}
-                  {countriesData.map((country) => (
-                    <Marker
-                      key={country.code}
-                      coordinates={country.coordinates}
-                      onMouseEnter={() => setHoveredCountry(country.code)}
-                      onMouseLeave={() => setHoveredCountry(null)}
-                      onClick={() => setSelectedCountry(country)}
-                    >
-                      <motion.g
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        whileHover={{ scale: 1.2 }}
-                        className="cursor-pointer"
-                      >
-                        <circle
-                          r={8}
-                          fill="#3b82f6"
-                          stroke="#fff"
-                          strokeWidth={2}
-                          className="drop-shadow-lg"
-                        />
-                        <circle
-                          r={12}
-                          fill="#3b82f6"
-                          opacity={0.3}
-                          className="animate-ping"
-                        />
-                      </motion.g>
-
-                      {/* Country name tooltip on hover */}
-                      <AnimatePresence>
-                        {hoveredCountry === country.code && (
-                          <motion.text
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0 }}
-                            textAnchor="middle"
-                            y={-15}
-                            className="text-xs font-semibold fill-primary pointer-events-none"
-                            style={{ textShadow: "0 0 3px white" }}
-                          >
-                            {country.name}
-                          </motion.text>
-                        )}
-                      </AnimatePresence>
-                    </Marker>
-                  ))}
-                </ZoomableGroup>
-              </ComposableMap>
-
-              {/* Map Legend */}
-              <div className="mt-4 flex items-center justify-center gap-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full bg-blue-500" />
-                  <span>{t('worldMap.activeCountries')}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-blue-500" />
-                  <span>{t('worldMap.clickToView')}</span>
-                </div>
-              </div>
-            </Card>
+                    <div className="space-y-3">
+                      {countries.map((country) => (
+                        <button
+                          key={country.code}
+                          onClick={() => setSelectedCountry(country)}
+                          className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
+                            selectedCountry?.code === country.code
+                              ? 'border-primary bg-primary/10'
+                              : 'border-border hover:border-primary/50 hover:bg-accent'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4 text-primary" />
+                              <span className="font-semibold">{country.name}</span>
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {country.projects} Projects
+                            </Badge>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          {/* Details Panel - Takes 1/3 on large screens */}
+          {/* Details Panel */}
           <div className="lg:col-span-1">
             <AnimatePresence mode="wait">
               {selectedCountry ? (
@@ -302,11 +237,11 @@ export function WorldMap() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                 >
-                  <Card className="p-6 sticky top-24">
+                  <Card className="p-6 sticky top-24 border-2 border-primary/50">
                     <div className="flex items-start justify-between mb-4">
                       <div>
                         <h3 className="text-2xl font-bold mb-1">{selectedCountry.name}</h3>
-                        <p className="text-sm text-muted-foreground">{selectedCountry.period}</p>
+                        <p className="text-sm text-muted-foreground">{selectedCountry.continent}</p>
                       </div>
                       <Badge variant="secondary">{selectedCountry.projects} Projects</Badge>
                     </div>
