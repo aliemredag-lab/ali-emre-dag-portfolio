@@ -196,25 +196,25 @@ export function WorldMap() {
                           <Geography
                             key={geo.rsmKey}
                             geography={geo}
-                            fill={isActive ? "#3b82f6" : "#D1D5DB"}
-                            stroke="#374151"
-                            strokeWidth={0.75}
+                            fill={isActive ? "#3b82f6" : "#9CA3AF"}
+                            stroke="#1f2937"
+                            strokeWidth={0.5}
                             style={{
                               default: {
                                 outline: "none",
-                                opacity: isActive ? 0.9 : 0.6,
+                                opacity: 1,
                                 transition: "all 250ms"
                               },
                               hover: {
                                 outline: "none",
                                 opacity: 1,
-                                fill: isActive ? "#2563eb" : "#9CA3AF",
+                                fill: isActive ? "#2563eb" : "#6B7280",
                                 cursor: isActive ? "pointer" : "default",
                                 transition: "all 250ms"
                               },
                               pressed: {
                                 outline: "none",
-                                opacity: 0.8
+                                opacity: 0.9
                               }
                             }}
                             onMouseEnter={() => {
