@@ -9,29 +9,40 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    const checkAuth = () => {
-      const sessionToken = localStorage.getItem("admin-session")
+    const checkAuth = async () => {
+      try {
+        // First check localStorage token (fallback)
+        const localToken = localStorage.getItem("admin-session")
 
-      // Check if session token exists and has valid format
-      if (sessionToken && sessionToken.startsWith("session-") && sessionToken.includes("-")) {
-        // Additional validation: check if session is not too old (24 hours)
-        const tokenParts = sessionToken.split("-")
-        if (tokenParts.length >= 3) {
-          const timestamp = parseInt(tokenParts[1])
-          const now = Date.now()
-          const hoursDiff = (now - timestamp) / (1000 * 60 * 60)
+        // Verify token with server (checks both cookie and localStorage)
+        const response = await fetch('/api/admin/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Important: send cookies
+          body: JSON.stringify({
+            action: 'verify',
+            token: localToken
+          })
+        })
 
-          if (hoursDiff < 24) { // Session valid for 24 hours
+        if (response.ok) {
+          const result = await response.json()
+          if (result.success && result.admin) {
             setIsAuthenticated(true)
           } else {
-            // Session expired
+            // Invalid session
             localStorage.removeItem("admin-session")
             router.push("/admin/login")
           }
         } else {
+          // Unauthorized
+          localStorage.removeItem("admin-session")
           router.push("/admin/login")
         }
-      } else {
+      } catch (error) {
+        console.error('Auth check failed:', error)
         router.push("/admin/login")
       }
       setIsLoading(false)

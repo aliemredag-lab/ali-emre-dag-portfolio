@@ -11,11 +11,53 @@ import { motion } from "framer-motion"
 
 export function EducationSection() {
   const { t } = useLanguage()
-  const groupedCertifications = profileData.certifications.reduce((acc, cert) => {
-    if (!acc[cert.category]) {
-      acc[cert.category] = []
+
+  // Translation mapping for degrees
+  const translateDegree = (degree: string) => {
+    if (degree.includes("Executive MBA")) return t("degree.executiveMBA")
+    if (degree.includes("Industrial Engineering")) return t("degree.industrialEngineering")
+    if (degree.includes("Mechatronics")) return t("degree.mechatronics")
+    return degree
+  }
+
+  // Translation mapping for certification categories
+  const translateCategory = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      "Agile & Project Management": t("certCategory.agile"),
+      "Operational Excellence & Lean": t("certCategory.lean"),
+      "Digital & Analytics": t("certCategory.digital"),
+      "Performance & Strategy": t("certCategory.performance")
     }
-    acc[cert.category].push(cert.name)
+    return categoryMap[category] || category
+  }
+
+  // Translation mapping for individual certifications
+  const translateCert = (certName: string) => {
+    const certMap: Record<string, string> = {
+      "Google Agile PM": t("cert.googleAgilePM"),
+      "Scrum Fundamentals": t("cert.scrumFundamentals"),
+      "Project Execution & Planning": t("cert.projectExecution"),
+      "Operational Excellence Principles": t("cert.opExcellence"),
+      "Lean Manufacturing": t("cert.leanManufacturing"),
+      "5S": t("cert.5s"),
+      "Six Sigma": t("cert.sixSigma"),
+      "BPS Systematic": t("cert.bpsSystematic"),
+      "Digital Transformation & Building Blocks": t("cert.digitalTransformation"),
+      "Power BI Tools": t("cert.powerBI"),
+      "Data Visualization": t("cert.dataVisualization"),
+      "Performance Management": t("cert.performanceMgmt"),
+      "KPI Setting": t("cert.kpiSetting"),
+      "Strategy Execution": t("cert.strategyExecution")
+    }
+    return certMap[certName] || certName
+  }
+
+  const groupedCertifications = profileData.certifications.reduce((acc, cert) => {
+    const translatedCategory = translateCategory(cert.category)
+    if (!acc[translatedCategory]) {
+      acc[translatedCategory] = []
+    }
+    acc[translatedCategory].push(translateCert(cert.name))
     return acc
   }, {} as Record<string, string[]>)
 
@@ -102,7 +144,7 @@ export function EducationSection() {
                       <div className="lg:col-span-8 p-8 flex items-center">
                         <div className="w-full">
                           <h4 className="text-2xl font-bold text-foreground mb-4">
-                            {edu.degree}
+                            {translateDegree(edu.degree)}
                           </h4>
                           <p className="text-muted-foreground">
                             Specialized education in supply chain management and international business operations.

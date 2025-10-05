@@ -4,6 +4,10 @@ import { TestimonialsSection } from "@/components/sections/testimonials"
 import { ExpertiseBanner } from "@/components/sections/expertise-banner"
 import { AboutSection } from "@/components/sections/about"
 import { StatsSection } from "@/components/sections/stats"
+import { CaseStudies } from "@/components/sections/case-studies"
+import { WorldMap } from "@/components/sections/world-map"
+import { InsightsBlog } from "@/components/sections/insights-blog"
+import { CalendarBooking } from "@/components/sections/calendar-booking"
 import { ExperienceSection } from "@/components/sections/experience"
 import { SkillsSection } from "@/components/sections/skills"
 import { ProjectsSection } from "@/components/sections/projects"
@@ -24,6 +28,10 @@ export default function HomePage() {
         <ExpertiseBanner />
         <AboutSection />
         <StatsSection />
+        <CaseStudies />
+        <WorldMap />
+        <InsightsBlog />
+        <CalendarBooking />
         <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />

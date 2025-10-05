@@ -58,7 +58,7 @@ export function RegisterSection() {
     // Create mailto link
     const subject = `Yeni Üye Kaydı: ${data.name}`
     const body = `Yeni üye kaydı alındı:\n\nİsim: ${data.name}\nEmail: ${data.email}\nŞirket: ${data.company}\n\nMesaj:\n${data.message}`
-    const mailtoLink = `mailto:aliemredag97@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const mailtoLink = `mailto:aliemredag@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
     window.location.href = mailtoLink
 

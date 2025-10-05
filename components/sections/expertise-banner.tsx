@@ -5,32 +5,35 @@ import { Section } from "@/components/ui/section"
 import { Badge } from "@/components/ui/badge"
 import { Globe, TrendingUp, Users, Award } from "lucide-react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/language-context"
 
 export function ExpertiseBanner() {
+  const { t } = useLanguage()
+
   const achievements = [
     {
       icon: <Globe className="w-6 h-6" />,
-      title: "Global Leadership",
-      description: "9 Countries Operations",
-      highlight: "International Supply Chain Expert"
+      title: t("expertise.globalLeadership"),
+      description: t("expertise.globalLeadershipDesc"),
+      highlight: t("expertise.globalLeadershipHighlight")
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Cost Optimization",
-      description: "€5.5M+ Savings Delivered",
-      highlight: "Strategic Excellence"
+      title: t("expertise.costOptimization"),
+      description: t("expertise.costOptimizationDesc"),
+      highlight: t("expertise.costOptimizationHighlight")
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Team Leadership",
-      description: "Multinational Teams",
-      highlight: "Cross-Cultural Management"
+      title: t("expertise.teamLeadership"),
+      description: t("expertise.teamLeadershipDesc"),
+      highlight: t("expertise.teamLeadershipHighlight")
     },
     {
       icon: <Award className="w-6 h-6" />,
-      title: "Industry Recognition",
-      description: "Renault & Bosch Leader",
-      highlight: "Proven Track Record"
+      title: t("expertise.industryRecognition"),
+      description: t("expertise.industryRecognitionDesc"),
+      highlight: t("expertise.industryRecognitionHighlight")
     }
   ]
 
@@ -45,14 +48,13 @@ export function ExpertiseBanner() {
           className="text-center mb-12"
         >
           <Badge className="bg-primary/10 text-primary border-primary/20 text-lg px-6 py-2 mb-4">
-            🏆 International Supply Chain Leadership Excellence
+            🏆 {t("expertise.badge")}
           </Badge>
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Transforming Global Operations Across Continents
+            {t("expertise.mainTitle")}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Leading complex supply chain transformations for multinational corporations with
-            proven expertise in inventory optimization, strategic cost reduction, and international team leadership
+            {t("expertise.description")}
           </p>
         </motion.div>
 
@@ -95,10 +97,10 @@ export function ExpertiseBanner() {
         >
           <div className="inline-flex items-center gap-4 px-8 py-4 rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
             <span className="text-sm font-medium text-muted-foreground">
-              Ready to optimize your global supply chain?
+              {t("expertise.cta")}
             </span>
             <Badge className="bg-primary text-primary-foreground">
-              Let's Connect
+              {t("expertise.connect")}
             </Badge>
           </div>
         </motion.div>

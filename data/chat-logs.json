@@ -1,0 +1,258 @@
+[
+  {
+    "id": "1759609442781",
+    "sessionId": "session-1759609414284-u6a989qfx",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:24:02.781Z"
+      },
+      {
+        "type": "user",
+        "content": "hello",
+        "timestamp": "2025-10-04T20:24:05.916Z"
+      },
+      {
+        "type": "bot",
+        "content": "Merhaba! 😊 Ben Ali Emre Dağ'ın asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:24:06.796Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:24:02.781Z",
+    "lastActivity": "2025-10-04T20:24:06.796Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759609544315",
+    "sessionId": "session-1759609538581-veciojt0j",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:25:44.316Z"
+      },
+      {
+        "type": "user",
+        "content": "hello",
+        "timestamp": "2025-10-04T20:26:07.077Z"
+      },
+      {
+        "type": "bot",
+        "content": "Merhaba! 😊 Ben Ali Emre Dağ'ın asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:26:07.930Z"
+      },
+      {
+        "type": "user",
+        "content": "hangi konularda yardımcı olabilirsin",
+        "timestamp": "2025-10-04T20:26:51.470Z"
+      },
+      {
+        "type": "bot",
+        "content": "Anlamadım, ama size şu konularda yardımcı olabilirim:\n\n• İş deneyimi ve kariyer\n• Eğitim ve sertifikalar\n• Yetenekler ve teknolojiler\n• Projeler\n• İletişim bilgileri\n• CV indirme\n\nHangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-04T20:26:52.618Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:25:44.316Z",
+    "lastActivity": "2025-10-04T20:26:52.618Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759609680495",
+    "sessionId": "session-1759609675833-h66d8gfg2",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:28:00.495Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:28:00.495Z",
+    "lastActivity": "2025-10-04T20:28:00.495Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759609695165",
+    "sessionId": "session-1759609692569-lv6vszdne",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:28:15.165Z"
+      },
+      {
+        "type": "user",
+        "content": "İletişim bilgilerini göster",
+        "timestamp": "2025-10-04T20:28:17.422Z"
+      },
+      {
+        "type": "bot",
+        "content": "Ali Emre Dağ şu an **Renault Group** şirketinde **Global Supply Chain & Inventory Manager** olarak çalışıyor (Jan 2023 - Present).\n\n📊 Temel başarılar:\n• Manages global inventory operations across 9 countries; €120M+ inventory levels\n• Achieved €5.5M cost reduction via after-sales inventory optimization\n• Leads cross-regional projects (destocking, commercial actions) aligned with market dynamics\n\nToplam 8+ yıl deneyim ve 9 ülkede proje yönetimi deneyimi var.",
+        "timestamp": "2025-10-04T20:28:18.388Z"
+      },
+      {
+        "type": "user",
+        "content": "Eğitim geçmişi hakkında bilgi ver",
+        "timestamp": "2025-10-04T20:28:27.121Z"
+      },
+      {
+        "type": "bot",
+        "content": "Ali Emre Dağ şu an **Renault Group** şirketinde **Global Supply Chain & Inventory Manager** olarak çalışıyor (Jan 2023 - Present).\n\n📊 Temel başarılar:\n• Manages global inventory operations across 9 countries; €120M+ inventory levels\n• Achieved €5.5M cost reduction via after-sales inventory optimization\n• Leads cross-regional projects (destocking, commercial actions) aligned with market dynamics\n\nToplam 8+ yıl deneyim ve 9 ülkede proje yönetimi deneyimi var.",
+        "timestamp": "2025-10-04T20:28:28.072Z"
+      },
+      {
+        "type": "user",
+        "content": "Yetenekler hakkında bilgi ver",
+        "timestamp": "2025-10-04T20:28:35.471Z"
+      },
+      {
+        "type": "bot",
+        "content": "💡 **Temel Yetenekler:**\n\n**Core Skills:**\nSupply Chain Management, Project Management, Budget Management, KPI & Forecasting, S&OP, Commercial Negotiation\n\n**Tools & Technologies:**\nSAP ERP, Power BI\n\n**Methodologies:**\nLean Manufacturing, Six Sigma, 5S, Value Stream Mapping",
+        "timestamp": "2025-10-04T20:28:36.319Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:28:15.165Z",
+    "lastActivity": "2025-10-04T20:28:36.320Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759609769498",
+    "sessionId": "session-1759609764294-7j8nuq0bs",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:29:29.498Z"
+      },
+      {
+        "type": "user",
+        "content": "CV indirmek istiyorum",
+        "timestamp": "2025-10-04T20:29:31.303Z"
+      },
+      {
+        "type": "bot",
+        "content": "✅ CV indirildi! Başka bir konuda yardımcı olabilir miyim?",
+        "timestamp": "2025-10-04T20:29:32.765Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:29:29.498Z",
+    "lastActivity": "2025-10-04T20:29:32.765Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759611031046",
+    "sessionId": "session-1759611009616-8f5nmolp6",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:50:31.046Z"
+      },
+      {
+        "type": "user",
+        "content": "hello",
+        "timestamp": "2025-10-04T20:50:35.098Z"
+      },
+      {
+        "type": "bot",
+        "content": "Merhaba! 😊 Ben Ali Emre Dağ'ın asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-04T20:50:36.179Z"
+      },
+      {
+        "type": "user",
+        "content": "can you talk english",
+        "timestamp": "2025-10-04T20:50:49.317Z"
+      },
+      {
+        "type": "bot",
+        "content": "Anlamadım, ama size şu konularda yardımcı olabilirim:\n\n• İş deneyimi ve kariyer\n• Eğitim ve sertifikalar\n• Yetenekler ve teknolojiler\n• Projeler\n• İletişim bilgileri\n• CV indirme\n\nHangi konuda bilgi almak istersiniz?",
+        "timestamp": "2025-10-04T20:50:50.160Z"
+      }
+    ],
+    "startTime": "2025-10-04T20:50:31.046Z",
+    "lastActivity": "2025-10-04T20:50:50.160Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759642227544",
+    "sessionId": "session-1759642086401-6r4ksixxy",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-05T05:30:27.544Z"
+      },
+      {
+        "type": "user",
+        "content": "hello",
+        "timestamp": "2025-10-05T05:30:30.496Z"
+      },
+      {
+        "type": "bot",
+        "content": "Merhaba! 😊 Ben Ali Emre Dağ'ın asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-05T05:30:31.654Z"
+      }
+    ],
+    "startTime": "2025-10-05T05:30:27.544Z",
+    "lastActivity": "2025-10-05T05:30:31.654Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759642315708",
+    "sessionId": "session-1759642308313-shehnu7w0",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-05T05:31:55.708Z"
+      },
+      {
+        "type": "user",
+        "content": "hello",
+        "timestamp": "2025-10-05T05:31:59.531Z"
+      },
+      {
+        "type": "bot",
+        "content": "Hello! 😊 I'm Ali Emre Dağ's assistant. How can I help you?",
+        "timestamp": "2025-10-05T05:32:00.459Z"
+      },
+      {
+        "type": "user",
+        "content": "İş deneyimi hakkında bilgi ver",
+        "timestamp": "2025-10-05T05:32:04.673Z"
+      },
+      {
+        "type": "bot",
+        "content": "Ali Emre Dağ is currently working at **Renault Group** as **Global Supply Chain & Inventory Manager** (Jan 2023 - Present).\n\n📊 Key achievements:\n• Manages global inventory operations across 9 countries; €120M+ inventory levels\n• Achieved €5.5M cost reduction via after-sales inventory optimization\n• Leads cross-regional projects (destocking, commercial actions) aligned with market dynamics\n\nTotal 8+ years of experience and project management across 9 countries.",
+        "timestamp": "2025-10-05T05:32:05.570Z"
+      }
+    ],
+    "startTime": "2025-10-05T05:31:55.708Z",
+    "lastActivity": "2025-10-05T05:32:05.570Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  }
+]

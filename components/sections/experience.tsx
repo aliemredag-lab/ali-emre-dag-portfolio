@@ -12,11 +12,20 @@ import { motion } from "framer-motion"
 export function ExperienceSection() {
   const { t } = useLanguage()
 
-  const getJobData = (company: string, fallbackPosition: string, fallbackDescription: string) => {
+  const getJobData = (company: string, fallbackPosition: string, fallbackDescription: string, highlights: string[]) => {
     const key = company.toLowerCase().replace(/\s+/g, '').replace('group', '').replace('grow platform gmbh', 'grow')
     const position = t(`jobs.${key}.position`) || fallbackPosition
     const description = t(`jobs.${key}.description`) || fallbackDescription
-    return { position, description }
+
+    // Try to get translated highlights
+    const translatedHighlights = highlights.map((_, index) => {
+      const highlightKey = `jobs.${key}.highlight${index + 1}`
+      const translated = t(highlightKey)
+      // If translation exists and is different from the key, use it
+      return translated !== highlightKey ? translated : highlights[index]
+    })
+
+    return { position, description, highlights: translatedHighlights }
   }
 
   return (
@@ -46,7 +55,7 @@ export function ExperienceSection() {
 
         <div className="max-w-6xl mx-auto space-y-8">
           {profileData.experience.map((job, index) => {
-            const jobData = getJobData(job.company, job.position, job.description)
+            const jobData = getJobData(job.company, job.position, job.description, job.highlights)
             return (
             <motion.div
               key={index}
@@ -102,10 +111,10 @@ export function ExperienceSection() {
                         <div className="space-y-4">
                           <h4 className="font-semibold text-foreground flex items-center gap-2">
                             <ChevronRight className="w-4 h-4 text-primary" />
-                            Key Achievements
+                            {t("experience.keyAchievements")}
                           </h4>
                           <div className="grid gap-3">
-                            {job.highlights.map((highlight, idx) => (
+                            {jobData.highlights.map((highlight, idx) => (
                               <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-background/50 hover:bg-background/80 transition-colors">
                                 <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
                                 <span className="text-sm text-muted-foreground">{highlight}</span>
@@ -118,7 +127,7 @@ export function ExperienceSection() {
                           <div className="space-y-4 pt-4 border-t border-border/50">
                             <h4 className="font-semibold text-foreground flex items-center gap-2">
                               <ChevronRight className="w-4 h-4 text-primary" />
-                              Specialized Roles
+                              {t("experience.specializedRoles")}
                             </h4>
                             <div className="grid gap-4">
                               {job.subRoles.map((role, idx) => (

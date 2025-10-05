@@ -129,7 +129,23 @@ export default function AdminPage() {
   const [passwordError, setPasswordError] = useState("")
   const router = useRouter()
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      // Call logout API to clear HTTP-only cookie
+      await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          action: 'logout'
+        })
+      })
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+
     // Clear all auth related storage
     localStorage.removeItem("admin-auth")
     localStorage.removeItem("admin-session")

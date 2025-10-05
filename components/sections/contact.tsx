@@ -40,19 +40,36 @@ export function ContactSection() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
 
-    // Create mailto link
-    const subject = `Portfolio Contact from ${data.name}`
-    const body = `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
-    const mailtoLink = `mailto:${profileData.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    try {
+      // Send to API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
 
-    window.location.href = mailtoLink
+      const result = await response.json()
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    reset()
+      if (result.success && result.mailtoLink) {
+        // Open mailto link
+        window.location.href = result.mailtoLink
 
-    // Reset success message after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000)
+        setIsSubmitted(true)
+        reset()
+
+        // Reset success message after 3 seconds
+        setTimeout(() => setIsSubmitted(false), 3000)
+      } else {
+        alert(result.message || 'Bir hata oluştu')
+      }
+    } catch (error) {
+      console.error('Contact form error:', error)
+      alert('Mesaj gönderilemedi. Lütfen tekrar deneyin.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (

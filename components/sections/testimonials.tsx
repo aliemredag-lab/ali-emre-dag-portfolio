@@ -56,7 +56,7 @@ export function TestimonialsSection() {
         >
           <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 text-lg px-6 py-2">
             <Star className="w-4 h-4 mr-2" />
-            Professional Recognition
+            {t("testimonials.badge")}
           </Badge>
           <h2 className="text-4xl font-bold tracking-tight mb-4">
             {t("testimonials.title")}

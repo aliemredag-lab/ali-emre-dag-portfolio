@@ -94,7 +94,7 @@ export function HeroSection() {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               <Button asChild size="lg" className="neo-card px-8 py-6 text-lg rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground">
-                <a href="mailto:aliemredag97@gmail.com?subject=Meeting%20Request&body=Hello%20Ali%20Emre,%0A%0AI%20would%20like%20to%20schedule%20a%20meeting.%0A%0AName:%0APhone:%0APreferred%20Date:%0APreferred%20Time:%0ATopic:">
+                <a href="mailto:aliemredag@gmail.com?subject=Meeting%20Request&body=Hello%20Ali%20Emre,%0A%0AI%20would%20like%20to%20schedule%20a%20meeting.%0A%0AName:%0APhone:%0APreferred%20Date:%0APreferred%20Time:%0ATopic:">
                   <Calendar className="w-5 h-5 mr-2" />
                   {t("hero.scheduleMeeting")}
                 </a>
@@ -151,25 +151,56 @@ export function HeroSection() {
         </div>
       </Container>
 
-      {/* Animated scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+      {/* Enhanced Animated scroll indicator with text */}
+      <motion.a
+        href="#about"
+        className="absolute bottom-16 sm:bottom-20 md:bottom-24 left-1/2 transform -translate-x-1/2 cursor-pointer group z-20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
       >
-        <motion.div
-          className="w-6 h-10 border-2 border-primary/30 rounded-full flex justify-center"
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <motion.div
-            className="w-1 h-3 bg-primary rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
+        <div className="flex flex-col items-center gap-3">
+          {/* Scroll text */}
+          <motion.p
+            className="text-sm font-medium text-primary/70 group-hover:text-primary transition-colors"
+            animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-      </motion.div>
+          >
+            Scroll Down
+          </motion.p>
+
+          {/* Mouse icon */}
+          <motion.div
+            className="w-7 h-11 border-2 border-primary/40 rounded-full flex justify-center p-2 group-hover:border-primary transition-colors"
+            animate={{ opacity: [1, 0.6, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <motion.div
+              className="w-1.5 h-3 bg-primary rounded-full"
+              animate={{ y: [0, 14, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
+
+          {/* Down arrow */}
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg
+              className="w-6 h-6 text-primary/60 group-hover:text-primary transition-colors"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </motion.div>
+        </div>
+      </motion.a>
     </Section>
   )
 }
