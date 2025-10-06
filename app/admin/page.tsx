@@ -366,6 +366,18 @@ export default function AdminPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  <Button
+                    className="w-full justify-start bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                    onClick={() => {
+                      localStorage.setItem('admin_preview_mode', 'true')
+                      window.open('/', '_blank')
+                      setNotification("✅ Preview mode activated! All content is now accessible.")
+                      setTimeout(() => setNotification(null), 4000)
+                    }}
+                  >
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Site as Guest (Unlock All)
+                  </Button>
                   <Button className="w-full justify-start" variant="outline" asChild>
                     <a href="/admin/edit">
                       <Edit className="w-4 h-4 mr-2" />

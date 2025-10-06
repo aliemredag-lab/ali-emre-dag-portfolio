@@ -254,5 +254,39 @@
       "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
       "ip": "::1"
     }
+  },
+  {
+    "id": "1759783674862",
+    "sessionId": "session-1759783671032-4srkgldog",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-06T20:47:54.862Z"
+      }
+    ],
+    "startTime": "2025-10-06T20:47:54.862Z",
+    "lastActivity": "2025-10-06T20:47:54.862Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
+  },
+  {
+    "id": "1759783969606",
+    "sessionId": "session-1759783967434-9l56vo4kn",
+    "messages": [
+      {
+        "type": "bot",
+        "content": "Merhaba! 👋 Ben Ali Emre Dağ'ın dijital asistanıyım. Size nasıl yardımcı olabilirim?",
+        "timestamp": "2025-10-06T20:52:49.606Z"
+      }
+    ],
+    "startTime": "2025-10-06T20:52:49.606Z",
+    "lastActivity": "2025-10-06T20:52:49.606Z",
+    "userInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "ip": "::1"
+    }
   }
 ]

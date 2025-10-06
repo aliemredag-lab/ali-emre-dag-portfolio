@@ -16,12 +16,6 @@ export function Footer() {
               </p>
             </div>
             <nav className="flex items-center space-x-6">
-              <Link
-                href="/resume"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Resume
-              </Link>
               <a
                 href="mailto:aliemredag@gmail.com"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"

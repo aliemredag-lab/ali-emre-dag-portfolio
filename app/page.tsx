@@ -15,6 +15,7 @@ import { RegisterSection } from "@/components/sections/register"
 import { ContactSection } from "@/components/sections/contact"
 import { Footer } from "@/components/footer"
 import { CursorEffect } from "@/components/ui/cursor-effect"
+import { MembershipGate } from "@/components/membership-gate"
 
 export default function HomePage() {
   return (
@@ -24,16 +25,21 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <TestimonialsSection />
-        <ExpertiseBanner />
         <AboutSection />
-        <StatsSection />
-        <CaseStudies />
-        <InsightsBlog />
-        <CalendarBooking />
         <ExperienceSection />
         <SkillsSection />
-        <ProjectsSection />
         <EducationSection />
+
+        {/* Members Only Content */}
+        <MembershipGate>
+          <ExpertiseBanner />
+          <StatsSection />
+          <CaseStudies />
+          <ProjectsSection />
+          <InsightsBlog />
+          <CalendarBooking />
+        </MembershipGate>
+
         <RegisterSection />
         <ContactSection />
       </main>

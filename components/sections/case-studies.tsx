@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { caseStudies, type CaseStudy } from "@/data/case-studies"
 import { useState } from "react"
 import { useLanguage } from "@/lib/language-context"
-import { ProtectedContent } from "@/components/protected-content"
 
 export function CaseStudies() {
   const [selectedCase, setSelectedCase] = useState<CaseStudy | null>(null)
@@ -16,12 +15,8 @@ export function CaseStudies() {
   const featuredCases = caseStudies.filter(cs => cs.featured)
 
   return (
-    <ProtectedContent
-      title="Exclusive Case Studies"
-      description="Register to access detailed case studies and success stories"
-    >
-      <section id="case-studies" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
-        <div className="container mx-auto px-4">
+    <section id="case-studies" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
+      <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -259,6 +254,5 @@ export function CaseStudies() {
         )}
       </div>
     </section>
-    </ProtectedContent>
   )
 }

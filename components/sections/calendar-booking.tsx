@@ -1,12 +1,14 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Calendar, Clock, Video, MessageSquare, CheckCircle2, Phone } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/language-context"
-import { ProtectedContent } from "@/components/protected-content"
+import { CalBookingModal } from "@/components/cal-booking-modal"
+
 
 interface MeetingType {
   title: string
@@ -20,6 +22,12 @@ interface MeetingType {
 
 export function CalendarBooking() {
   const { t } = useLanguage()
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedMeeting, setSelectedMeeting] = useState<{
+    calLink: string
+    title: string
+    color: string
+  } | null>(null)
 
   const meetingTypes: MeetingType[] = [
     {
@@ -33,7 +41,7 @@ export function CalendarBooking() {
         t('calendar.intro3')
       ],
       color: 'from-blue-500 to-cyan-500',
-      calendlyUrl: 'https://calendly.com/aliemredag/15min'
+      calendlyUrl: 'ali-emre-dag-8mspaz/15min' // Cal.com: 15dk event oluşturduktan sonra link buraya
     },
     {
       title: t('calendar.consultation'),
@@ -47,7 +55,7 @@ export function CalendarBooking() {
         t('calendar.consult4')
       ],
       color: 'from-purple-500 to-pink-500',
-      calendlyUrl: 'https://calendly.com/aliemredag/30min'
+      calendlyUrl: 'ali-emre-dag-8mspaz/30min' // Cal.com: https://cal.com/ali-emre-dag-8mspaz/30min ✅
     },
     {
       title: t('calendar.workshop'),
@@ -62,17 +70,13 @@ export function CalendarBooking() {
         t('calendar.workshop5')
       ],
       color: 'from-orange-500 to-red-500',
-      calendlyUrl: 'https://calendly.com/aliemredag/60min'
+      calendlyUrl: 'ali-emre-dag-8mspaz/60min' // Cal.com: 60dk event oluşturduktan sonra link buraya
     }
   ]
 
   return (
-    <ProtectedContent
-      title="Schedule a Consultation"
-      description="Register to book a meeting and discuss your supply chain challenges"
-    >
-      <section id="book-consultation" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
-        <div className="container mx-auto px-4">
+    <section id="book-consultation" className="py-20 bg-gradient-to-b from-background via-background/50 to-background">
+      <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -142,17 +146,18 @@ export function CalendarBooking() {
 
                     {/* CTA Button */}
                     <Button
-                      asChild
+                      onClick={() => {
+                        setSelectedMeeting({
+                          calLink: meeting.calendlyUrl,
+                          title: meeting.title,
+                          color: meeting.color
+                        })
+                        setModalOpen(true)
+                      }}
                       className={`w-full bg-gradient-to-r ${meeting.color} hover:opacity-90 text-white`}
                     >
-                      <a
-                        href={meeting.calendlyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        {t('calendar.bookNow')}
-                      </a>
+                      <Calendar className="mr-2 h-4 w-4" />
+                      {t('calendar.bookNow')}
                     </Button>
                   </div>
                 </Card>
@@ -203,7 +208,20 @@ export function CalendarBooking() {
           </Button>
         </motion.div>
       </div>
+
+      {/* Booking Modal */}
+      {selectedMeeting && (
+        <CalBookingModal
+          isOpen={modalOpen}
+          onClose={() => {
+            setModalOpen(false)
+            setSelectedMeeting(null)
+          }}
+          calLink={selectedMeeting.calLink}
+          meetingTitle={selectedMeeting.title}
+          meetingColor={selectedMeeting.color}
+        />
+      )}
     </section>
-    </ProtectedContent>
   )
 }

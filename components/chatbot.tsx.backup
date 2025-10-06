@@ -2,13 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X, Send, User, Bot, Mail, Linkedin, Phone, Briefcase, GraduationCap } from "lucide-react"
+import { MessageCircle, X, Send, User, Bot, Download, Mail, Linkedin, Phone, Briefcase, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { profileData } from "@/data/profile"
-import { useLanguage } from "@/lib/language-context"
 
 interface Message {
   id: string
@@ -25,19 +24,13 @@ interface QuickAction {
 }
 
 export function Chatbot() {
-  const { language } = useLanguage() // Get current page language
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [chatLanguage, setChatLanguage] = useState<'tr' | 'en'>(language) // Use page language as default
+  const [chatLanguage, setChatLanguage] = useState<'tr' | 'en'>('tr') // Default Turkish
   const [sessionId] = useState(() => `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  // Update chat language when page language changes
-  useEffect(() => {
-    setChatLanguage(language)
-  }, [language])
 
   // Detect language from user message
   const detectLanguage = (text: string): 'tr' | 'en' => {
@@ -90,11 +83,13 @@ export function Chatbot() {
 
         const quickActionsLabels = {
           tr: [
+            { label: "📄 CV İndir", icon: Download, action: () => handleQuickAction("cv") },
             { label: "💼 Deneyim", icon: Briefcase, action: () => handleQuickAction("experience") },
             { label: "🎓 Eğitim", icon: GraduationCap, action: () => handleQuickAction("education") },
             { label: "📧 İletişim", icon: Mail, action: () => handleQuickAction("contact") },
           ],
           en: [
+            { label: "📄 Download CV", icon: Download, action: () => handleQuickAction("cv") },
             { label: "💼 Experience", icon: Briefcase, action: () => handleQuickAction("experience") },
             { label: "🎓 Education", icon: GraduationCap, action: () => handleQuickAction("education") },
             { label: "📧 Contact", icon: Mail, action: () => handleQuickAction("contact") },
@@ -147,9 +142,11 @@ export function Chatbot() {
           ? `Merhaba! 😊 Ben ${profileData.name}'ın asistanıyım. Size nasıl yardımcı olabilirim?`
           : `Hello! 😊 I'm ${profileData.name}'s assistant. How can I help you?`,
         actions: lang === 'tr' ? [
+          { label: "📄 CV", icon: Download, action: () => handleQuickAction("cv") },
           { label: "💼 İş Deneyimi", icon: Briefcase, action: () => handleQuickAction("experience") },
           { label: "📧 İletişim", icon: Mail, action: () => handleQuickAction("contact") }
         ] : [
+          { label: "📄 Resume", icon: Download, action: () => handleQuickAction("cv") },
           { label: "💼 Experience", icon: Briefcase, action: () => handleQuickAction("experience") },
           { label: "📧 Contact", icon: Mail, action: () => handleQuickAction("contact") }
         ]
@@ -164,11 +161,11 @@ export function Chatbot() {
           ? `${profileData.name} şu an **${currentRole.company}** şirketinde **${currentRole.position}** olarak çalışıyor (${currentRole.startDate} - ${currentRole.endDate}).\n\n📊 Temel başarılar:\n${currentRole.highlights.slice(0, 3).map(h => `• ${h}`).join('\n')}\n\nToplam ${profileData.kpiStats.find(s => s.label === "Years Experience")?.value} yıl deneyim ve ${profileData.kpiStats.find(s => s.label === "Countries Coverage")?.value} ülkede proje yönetimi deneyimi var.`
           : `${profileData.name} is currently working at **${currentRole.company}** as **${currentRole.position}** (${currentRole.startDate} - ${currentRole.endDate}).\n\n📊 Key achievements:\n${currentRole.highlights.slice(0, 3).map(h => `• ${h}`).join('\n')}\n\nTotal ${profileData.kpiStats.find(s => s.label === "Years Experience")?.value} years of experience and project management across ${profileData.kpiStats.find(s => s.label === "Countries Coverage")?.value} countries.`,
         actions: lang === 'tr' ? [
-          { label: "🎯 Yetenekler", icon: Briefcase, action: () => handleQuickAction("skills") },
-          { label: "📧 İletişim", icon: Mail, action: () => handleQuickAction("contact") }
+          { label: "📄 Tam CV", icon: Download, action: () => handleQuickAction("cv") },
+          { label: "🎯 Yetenekler", icon: Briefcase, action: () => handleQuickAction("skills") }
         ] : [
-          { label: "🎯 Skills", icon: Briefcase, action: () => handleQuickAction("skills") },
-          { label: "📧 Contact", icon: Mail, action: () => handleQuickAction("contact") }
+          { label: "📄 Full Resume", icon: Download, action: () => handleQuickAction("cv") },
+          { label: "🎯 Skills", icon: Briefcase, action: () => handleQuickAction("skills") }
         ]
       }
     }
@@ -196,9 +193,9 @@ export function Chatbot() {
       return {
         message: `💡 **${lang === 'tr' ? 'Temel Yetenekler' : 'Core Skills'}:**\n\n**Core Skills:**\n${profileData.skills.core.slice(0, 6).join(', ')}\n\n**Tools & Technologies:**\n${profileData.skills.tools.join(', ')}\n\n**Methodologies:**\n${profileData.skills.methods.join(', ')}`,
         actions: lang === 'tr' ? [
-          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
+          { label: "📄 Detaylı CV", icon: Download, action: () => handleQuickAction("cv") }
         ] : [
-          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
+          { label: "📄 Full Resume", icon: Download, action: () => handleQuickAction("cv") }
         ]
       }
     }
@@ -240,18 +237,18 @@ export function Chatbot() {
       }
     }
 
-    // LinkedIn Profile
-    if (msg.match(/(cv|özgeçmiş|resume|download|indir|linkedin)/)) {
+    // CV Download
+    if (msg.match(/(cv|özgeçmiş|resume|download|indir)/)) {
       return {
         message: lang === 'tr'
-          ? `💼 Detaylı bilgi için LinkedIn profilimi ziyaret edebilirsiniz. Orada iş deneyimim, projelerim ve başarılarımı görebilirsiniz.`
-          : `💼 You can visit my LinkedIn profile for detailed information. You can see my work experience, projects, and achievements there.`,
+          ? `📄 CV'yi indirmek için aşağıdaki butona tıklayabilirsiniz. Ayrıca detaylı bilgi için LinkedIn profilini de ziyaret edebilirsiniz.`
+          : `📄 You can download the resume by clicking the button below. You can also visit the LinkedIn profile for detailed information.`,
         actions: lang === 'tr' ? [
-          { label: "💼 LinkedIn Profilim", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') },
-          { label: "📧 İletişim", icon: Mail, action: () => handleQuickAction("contact") }
+          { label: "📄 CV İndir", icon: Download, action: () => handleQuickAction("cv") },
+          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
         ] : [
-          { label: "💼 LinkedIn Profile", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') },
-          { label: "📧 Contact", icon: Mail, action: () => handleQuickAction("contact") }
+          { label: "📄 Download Resume", icon: Download, action: () => handleQuickAction("cv") },
+          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
         ]
       }
     }
@@ -303,10 +300,10 @@ export function Chatbot() {
           : `You're welcome! 😊 Can I help you with anything else?`,
         actions: lang === 'tr' ? [
           { label: "📧 İletişim", icon: Mail, action: () => handleQuickAction("contact") },
-          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
+          { label: "📄 CV İndir", icon: Download, action: () => handleQuickAction("cv") }
         ] : [
           { label: "📧 Contact", icon: Mail, action: () => handleQuickAction("contact") },
-          { label: "💼 LinkedIn", icon: Linkedin, action: () => window.open('https://www.linkedin.com/in/aliemredag/', '_blank') }
+          { label: "📄 Download Resume", icon: Download, action: () => handleQuickAction("cv") }
         ]
       }
     }
@@ -314,8 +311,8 @@ export function Chatbot() {
     // Default response with suggestions
     return {
       message: lang === 'tr'
-        ? `Anlamadım, ama size şu konularda yardımcı olabilirim:\n\n• İş deneyimi ve kariyer\n• Eğitim ve sertifikalar\n• Yetenekler ve teknolojiler\n• Projeler\n• İletişim bilgileri\n• LinkedIn profili\n\nHangi konuda bilgi almak istersiniz?`
-        : `I didn't understand, but I can help you with:\n\n• Work experience and career\n• Education and certifications\n• Skills and technologies\n• Projects\n• Contact information\n• LinkedIn profile\n\nWhat would you like to know about?`,
+        ? `Anlamadım, ama size şu konularda yardımcı olabilirim:\n\n• İş deneyimi ve kariyer\n• Eğitim ve sertifikalar\n• Yetenekler ve teknolojiler\n• Projeler\n• İletişim bilgileri\n• CV indirme\n\nHangi konuda bilgi almak istersiniz?`
+        : `I didn't understand, but I can help you with:\n\n• Work experience and career\n• Education and certifications\n• Skills and technologies\n• Projects\n• Contact information\n• Resume download\n\nWhat would you like to know about?`,
       actions: lang === 'tr' ? [
         { label: "💼 Deneyim", icon: Briefcase, action: () => handleQuickAction("experience") },
         { label: "🎓 Eğitim", icon: GraduationCap, action: () => handleQuickAction("education") },
@@ -330,11 +327,25 @@ export function Chatbot() {
 
   const handleQuickAction = (action: string) => {
     const actionMessages: Record<string, string> = {
+      cv: "CV indir",
       experience: "İş deneyimi hakkında bilgi ver",
       education: "Eğitim geçmişi hakkında bilgi ver",
       contact: "İletişim bilgilerini göster",
       skills: "Yetenekler hakkında bilgi ver",
       certifications: "Sertifikalar hakkında bilgi ver"
+    }
+
+    if (action === "cv") {
+      window.open('/Ali-Emre-Dag-Resume.pdf', '_blank')
+      addUserMessage("CV indirmek istiyorum")
+      setTimeout(() => {
+        setIsTyping(true)
+        setTimeout(() => {
+          setIsTyping(false)
+          addBotMessage("✅ CV indirildi! Başka bir konuda yardımcı olabilir miyim?")
+        }, 1000)
+      }, 500)
+      return
     }
 
     const message = actionMessages[action] || action
