@@ -33,18 +33,15 @@ export default function AdminLoginPage() {
         })
       })
 
-      if (response.ok) {
-        const result = await response.json()
-        if (result.success) {
-          // Generate secure session token
-          const sessionToken = result.token || 'authenticated-' + Date.now()
-          localStorage.setItem("admin-session", sessionToken)
-          router.push("/admin")
-        } else {
-          alert(result.message || "Invalid credentials")
-        }
+      const result = await response.json()
+
+      if (result.success) {
+        // Generate secure session token
+        const sessionToken = result.token || 'authenticated-' + Date.now()
+        localStorage.setItem("admin-session", sessionToken)
+        router.push("/admin")
       } else {
-        alert("Authentication failed")
+        alert(result.message || "Authentication failed")
       }
     } catch (error) {
       console.error('Login error:', error)

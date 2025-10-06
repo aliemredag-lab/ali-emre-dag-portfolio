@@ -25,15 +25,6 @@ export function MembershipGate({ children }: MembershipGateProps) {
   const [position, setPosition] = useState('')
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const [adminPreview, setAdminPreview] = useState(false)
-
-  // Check for admin preview mode
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isAdminPreview = localStorage.getItem('admin_preview_mode') === 'true'
-      setAdminPreview(isAdminPreview)
-    }
-  }, [])
 
   if (loading) {
     return (
@@ -46,8 +37,8 @@ export function MembershipGate({ children }: MembershipGateProps) {
     )
   }
 
-  // Allow access if user is logged in OR admin preview mode is active
-  if (user || adminPreview) {
+  // Allow access only if user is logged in (admin preview removed for security)
+  if (user) {
     return <>{children}</>
   }
 
