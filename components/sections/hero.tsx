@@ -14,17 +14,10 @@ export function HeroSection() {
   const { t } = useLanguage()
   const [profileImage, setProfileImage] = useState<string | null>(null)
 
-  // Get profile image from localStorage or use static default
+  // Use static profile image from public folder
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedImage = localStorage.getItem('profile-image')
-      if (savedImage) {
-        setProfileImage(savedImage)
-      } else {
-        // Use static profile image from profileData
-        setProfileImage(profileData.profileImage || null)
-      }
-    }
+    // Always use the static profile.jpg from public folder
+    setProfileImage('/profile.jpg')
   }, [])
 
   return (
@@ -129,7 +122,7 @@ export function HeroSection() {
                   <img
                     src={profileImage}
                     alt={profileData.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-primary/25 to-primary/15 flex flex-col items-center justify-center">
