@@ -96,14 +96,14 @@ const checkRateLimit = (ip: string): { allowed: boolean; retryAfter?: number } =
   }
 
   // Progressive blocking:
-  // 3-5 attempts: no block
-  // 6-10 attempts: 5 min block
-  // 10+ attempts: 30 min block
-  if (attempts.count >= 10) {
+  // 5-10 attempts: 60 sec block
+  // 10-15 attempts: 5 min block
+  // 15+ attempts: 30 min block
+  if (attempts.count >= 15) {
     const blockedUntil = now + (30 * 60 * 1000) // 30 minutes
     loginAttempts.set(ip, { ...attempts, blockedUntil })
     return { allowed: false, retryAfter: 1800 }
-  } else if (attempts.count >= 6) {
+  } else if (attempts.count >= 10) {
     const blockedUntil = now + (5 * 60 * 1000) // 5 minutes
     loginAttempts.set(ip, { ...attempts, blockedUntil })
     return { allowed: false, retryAfter: 300 }
