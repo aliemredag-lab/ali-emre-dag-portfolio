@@ -17,13 +17,11 @@ export default function MediaManagementPage() {
 
   // Load saved image on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('profile-image')
-      if (saved) setProfileImage(saved)
-    }
+    // Always show the static profile.jpg from public folder
+    setProfileImage('/profile.jpg?t=' + Date.now())
   }, [])
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       setIsUploading(true)
@@ -42,19 +40,29 @@ export default function MediaManagementPage() {
         return
       }
 
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const imageData = e.target?.result as string
-        setProfileImage(imageData)
-        localStorage.setItem('profile-image', imageData)
-        setIsUploading(false)
+      // Upload file to server/public folder
+      const formData = new FormData()
+      formData.append('file', file)
 
-        // Show success message
-        setTimeout(() => {
-          alert('Profile photo updated successfully!')
-        }, 500)
+      try {
+        const response = await fetch('/api/admin/upload', {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (response.ok) {
+          const result = await response.json()
+          setProfileImage(result.url)
+          setIsUploading(false)
+          alert('Profile photo updated successfully! Refresh the homepage to see changes.')
+        } else {
+          throw new Error('Upload failed')
+        }
+      } catch (error) {
+        console.error('Upload error:', error)
+        alert('Failed to upload photo. Please try again.')
+        setIsUploading(false)
       }
-      reader.readAsDataURL(file)
     }
   }
 
